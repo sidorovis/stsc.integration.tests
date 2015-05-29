@@ -20,6 +20,7 @@ import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorSettings;
+import stsc.general.statistic.MetricType;
 import stsc.general.statistic.Metrics;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
@@ -42,8 +43,8 @@ public class PositionNDayMStocksTest {
 	public void testPositionNDayMStocks() throws Exception {
 		Metrics s = Simulator.fromFile(new File("./test_data/simulator_tests/ndays.ini")).getMetrics();
 		Assert.assertNotNull(s);
-		Assert.assertEquals(550.0, s.getMetric("period"), Settings.doubleEpsilon);
-		Assert.assertEquals(-21.784509, s.getMetric("avGain"), Settings.doubleEpsilon);
+		Assert.assertEquals(550.0, s.getMetric(MetricType.period), Settings.doubleEpsilon);
+		Assert.assertEquals(-21.784509, s.getMetric(MetricType.avGain), Settings.doubleEpsilon);
 	}
 
 	private void testHelper(String side) throws BadAlgorithmException, BadSignalException, ParseException, IOException {
@@ -65,7 +66,7 @@ public class PositionNDayMStocksTest {
 
 		final Simulator simulator = new Simulator(new SimulatorSettings(0, init));
 		final Metrics s = simulator.getMetrics();
-		Assert.assertEquals(0.247656, s.getMetric("freq"), Settings.doubleEpsilon);
+		Assert.assertEquals(0.247656, s.getMetric(MetricType.freq), Settings.doubleEpsilon);
 	}
 
 	@Test
