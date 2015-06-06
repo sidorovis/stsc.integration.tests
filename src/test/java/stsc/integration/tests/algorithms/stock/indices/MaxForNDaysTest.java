@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.MaxForNDays;
+import stsc.algorithms.indices.stock.MaxForNDays;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.msi.McClellanOscillator;
+import stsc.algorithms.indices.msi.stock.McClellanOscillator;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.adx.AdxDxi;
+import stsc.algorithms.indices.adx.stock.AdxDxi;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

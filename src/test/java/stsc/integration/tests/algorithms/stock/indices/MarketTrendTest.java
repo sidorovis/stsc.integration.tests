@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.MarketTrend;
+import stsc.algorithms.indices.stock.MarketTrend;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

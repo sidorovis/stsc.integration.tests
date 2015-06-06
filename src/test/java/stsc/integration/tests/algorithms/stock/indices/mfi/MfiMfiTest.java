@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.mfi.MfiMfi;
+import stsc.algorithms.indices.mfi.stock.MfiMfi;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

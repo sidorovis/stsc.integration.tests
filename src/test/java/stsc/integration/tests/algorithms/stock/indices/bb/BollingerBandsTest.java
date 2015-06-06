@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.bb.BollingerBands;
+import stsc.algorithms.indices.bb.stock.BollingerBands;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

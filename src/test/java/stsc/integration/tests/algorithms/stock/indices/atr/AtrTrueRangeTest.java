@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.atr.AtrTrueRange;
+import stsc.algorithms.indices.atr.stock.AtrTrueRange;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.atr.AtrAtr;
+import stsc.algorithms.indices.atr.stock.AtrAtr;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

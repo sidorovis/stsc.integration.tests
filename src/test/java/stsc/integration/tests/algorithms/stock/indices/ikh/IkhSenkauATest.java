@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.ikh.IkhSenkauA;
+import stsc.algorithms.indices.ikh.stock.IkhSenkauA;
 import stsc.common.Day;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;

@@ -8,8 +8,8 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.rsi.RsiD;
-import stsc.algorithms.stock.indices.rsi.RsiU;
+import stsc.algorithms.indices.rsi.stock.RsiD;
+import stsc.algorithms.indices.rsi.stock.RsiU;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

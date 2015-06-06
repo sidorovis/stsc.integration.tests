@@ -6,9 +6,9 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.eod.indices.adl.AdlAdl;
-import stsc.algorithms.eod.indices.adl.Adln;
-import stsc.algorithms.eod.indices.adl.Adlt;
+import stsc.algorithms.indices.adl.eod.AdlAdl;
+import stsc.algorithms.indices.adl.eod.Adln;
+import stsc.algorithms.indices.adl.eod.Adlt;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

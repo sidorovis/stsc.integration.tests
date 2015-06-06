@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.indices.adi.AdiClv;
+import stsc.algorithms.indices.adi.stock.AdiClv;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Prices;

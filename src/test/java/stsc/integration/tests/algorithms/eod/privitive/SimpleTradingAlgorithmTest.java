@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import stsc.algorithms.eod.primitive.TestingEodAlgorithm;
+import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;

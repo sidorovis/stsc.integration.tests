@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.primitive.SeveralLastMax;
+import stsc.algorithms.indices.primitive.stock.SeveralLastMax;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

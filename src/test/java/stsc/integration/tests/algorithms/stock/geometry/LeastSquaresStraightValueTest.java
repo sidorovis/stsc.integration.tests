@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.geometry.LeastSquaresStraightValue;
+import stsc.algorithms.geometry.stock.LeastSquaresStraightValue;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

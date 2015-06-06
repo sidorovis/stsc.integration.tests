@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.primitive.Diff;
-import stsc.algorithms.stock.indices.primitive.Ema;
-import stsc.algorithms.stock.indices.primitive.Sma;
+import stsc.algorithms.indices.primitive.stock.Diff;
+import stsc.algorithms.indices.primitive.stock.Ema;
+import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

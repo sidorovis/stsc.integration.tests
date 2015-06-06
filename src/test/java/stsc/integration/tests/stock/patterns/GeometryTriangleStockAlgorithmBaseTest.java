@@ -3,7 +3,7 @@ package stsc.integration.tests.stock.patterns;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.stock.patterns.GeometryTriangleStockAlgorithmBase;
+import stsc.algorithms.patterns.stock.GeometryTriangleStockAlgorithmBase;
 import stsc.common.Settings;
 
 public class GeometryTriangleStockAlgorithmBaseTest {

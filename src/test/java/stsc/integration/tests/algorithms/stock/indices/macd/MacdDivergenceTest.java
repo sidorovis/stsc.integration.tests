@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.macd.MacdDivergence;
+import stsc.algorithms.indices.macd.stock.MacdDivergence;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;

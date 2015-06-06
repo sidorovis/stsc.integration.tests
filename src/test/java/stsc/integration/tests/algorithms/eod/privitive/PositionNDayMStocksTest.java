@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import stsc.algorithms.AlgorithmSettingsImpl;
 import stsc.algorithms.Input;
-import stsc.algorithms.eod.primitive.PositionNDayMStocks;
+import stsc.algorithms.primitive.eod.PositionNDayMStocks;
 import stsc.common.BadSignalException;
 import stsc.common.FromToPeriod;
 import stsc.common.Settings;

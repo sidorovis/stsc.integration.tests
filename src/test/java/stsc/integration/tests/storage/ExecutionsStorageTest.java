@@ -5,8 +5,8 @@ import java.text.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.eod.primitive.TestingEodAlgorithm;
-import stsc.algorithms.stock.indices.primitive.Sma;
+import stsc.algorithms.indices.primitive.stock.Sma;
+import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.common.algorithms.AlgorithmSettings;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;

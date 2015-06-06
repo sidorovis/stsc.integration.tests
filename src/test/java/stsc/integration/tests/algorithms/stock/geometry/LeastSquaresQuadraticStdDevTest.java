@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.geometry.LeastSquaresQuadraticStdDev;
+import stsc.algorithms.geometry.stock.LeastSquaresQuadraticStdDev;
 import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;

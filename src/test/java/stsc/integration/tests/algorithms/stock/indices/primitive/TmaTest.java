@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.algorithms.Input;
-import stsc.algorithms.stock.indices.primitive.Tma;
+import stsc.algorithms.indices.primitive.stock.Tma;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;
