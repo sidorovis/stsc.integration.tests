@@ -32,7 +32,7 @@ import stsc.storage.mocks.StockStorageMock;
 
 public class MovingPearsonCorrelationTest {
 
-	// @Test
+	@Test
 	public void testCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
@@ -84,7 +84,7 @@ public class MovingPearsonCorrelationTest {
 
 	}
 
-	// @Test
+	@Test
 	public void testCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
@@ -141,7 +141,7 @@ public class MovingPearsonCorrelationTest {
 
 	@Test
 	public void testMovingPearsonCorrelationForSeveralStocks() throws BadAlgorithmException, ParseException, BadSignalException {
-		final StockStorage stockStorage = StockStorageMock.getStockStorage();
+		final StockStorage stockStorage = StockStorageMock.reset();
 		final String executionName = "correlation";
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
 				"EodExecutions = " + executionName + "\n" + //
@@ -154,7 +154,7 @@ public class MovingPearsonCorrelationTest {
 		for (int i = 0; i < size; ++i) {
 			Assert.assertTrue(signalsStorage.getEodSignal(executionName, i).getValue().isPresent());
 		}
-		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, size - 1).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
+		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, size - 2).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
 	}
 
 }
