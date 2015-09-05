@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.fundamental.analysis.statistics.eod.MovingPearsonCorrelation;
+import stsc.algorithms.fundamental.analysis.statistics.eod.LeftToRightMovingPearsonCorrelation;
 import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.FromToPeriod;
@@ -30,10 +30,10 @@ import stsc.signals.MapKeyPairToDoubleSignal;
 import stsc.storage.ThreadSafeStockStorage;
 import stsc.storage.mocks.StockStorageMock;
 
-public class MovingPearsonCorrelationTest {
+public class LeftToRightMovingPearsonCorrelationTest {
 
 	@Test
-	public void testCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
+	public void testAllToAllMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile("./test_data/spy.uf");
@@ -44,7 +44,9 @@ public class MovingPearsonCorrelationTest {
 		final BrokerImpl broker = new BrokerImpl(stockStorage);
 		final EodAlgoInitHelper eodInit = new EodAlgoInitHelper("mt", stockInit.getStorage(), broker);
 		eodInit.getSettings().setInteger("size", 100000);
-		final MovingPearsonCorrelation c = new MovingPearsonCorrelation(eodInit.getInit());
+		eodInit.getSettings().setString("LE", "spy");
+		eodInit.getSettings().setString("RE", "spy|spyCopy");
+		final LeftToRightMovingPearsonCorrelation c = new LeftToRightMovingPearsonCorrelation(eodInit.getInit());
 
 		final int spyIndex = spy.findDayIndex(new LocalDate(1980, 9, 4).toDate());
 		final int spyCopyIndex = spyCopy.findDayIndex(new LocalDate(1980, 9, 4).toDate());
@@ -74,18 +76,20 @@ public class MovingPearsonCorrelationTest {
 				++u;
 			}
 			final MapKeyPairToDoubleSignal signal = stockInit.getStorage().getEodSignal("mt", spyDay.getDate()).getContent(MapKeyPairToDoubleSignal.class);
-			final double correlation = signal.getValue("spy", "spyCopy");
+			final double correlationForSpyAndCopy = signal.getValue("spy", "spyCopy");
+			final double correlationForSpyAndSpy = signal.getValue("spy", "spy");
+			Assert.assertEquals(2, signal.getValues().size());
 			if (i - spyIndex < 11) {
-				Assert.assertEquals(0.0, correlation, Settings.doubleEpsilon);
+				Assert.assertEquals(0.0, correlationForSpyAndCopy, Settings.doubleEpsilon);
+				Assert.assertEquals(0.0, correlationForSpyAndSpy, Settings.doubleEpsilon);
 			} else {
-				Assert.assertEquals(1.0, correlation, Settings.doubleEpsilon);
+				Assert.assertEquals(1.0, correlationForSpyAndSpy, Settings.doubleEpsilon);
 			}
 		}
-
 	}
 
 	@Test
-	public void testCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
+	public void testLeftToRightMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile("./test_data/spy.uf");
@@ -96,7 +100,9 @@ public class MovingPearsonCorrelationTest {
 		final BrokerImpl broker = new BrokerImpl(stockStorage);
 		final EodAlgoInitHelper eodInit = new EodAlgoInitHelper("mt", stockInit.getStorage(), broker);
 		eodInit.getSettings().setInteger("size", 100000);
-		final MovingPearsonCorrelation c = new MovingPearsonCorrelation(eodInit.getInit());
+		eodInit.getSettings().setString("LE", "spy");
+		eodInit.getSettings().setString("RE", "aapl");
+		final LeftToRightMovingPearsonCorrelation c = new LeftToRightMovingPearsonCorrelation(eodInit.getInit());
 
 		final int spyIndex = spy.findDayIndex(new LocalDate(1980, 9, 4).toDate());
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(1980, 9, 4).toDate());
@@ -140,12 +146,14 @@ public class MovingPearsonCorrelationTest {
 	}
 
 	@Test
-	public void testMovingPearsonCorrelationForSeveralStocks() throws BadAlgorithmException, ParseException, BadSignalException {
+	public void testLeftToRightMovingPearsonCorrelationForSeveralStocks() throws BadAlgorithmException, ParseException, BadSignalException {
 		final StockStorage stockStorage = StockStorageMock.reset();
 		final String executionName = "correlation";
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
-				"EodExecutions = " + executionName + "\n" + //
-						executionName + ".loadLine = ." + MovingPearsonCorrelation.class.getSimpleName() + "(size=10000i)\n");
+				"EodExecutions = " + executionName + "\n"
+						+ //
+						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName()
+						+ "(size=10000i, LE=spy, RE=aapl|adm|spy)\n");
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, tradeProcessorInit);
 		final Simulator simulator = new Simulator(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
