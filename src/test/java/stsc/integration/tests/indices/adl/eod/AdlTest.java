@@ -21,8 +21,9 @@ import stsc.storage.mocks.StockStorageMock;
 
 public class AdlTest {
 
+	private final StockStorage stockStorage = StockStorageMock.getStockStorage();
+
 	private Stock getStock(String stockName) {
-		final StockStorage stockStorage = StockStorageMock.getStockStorage();
 		return stockStorage.getStock(stockName).get();
 	}
 
@@ -33,7 +34,6 @@ public class AdlTest {
 
 	@Test
 	public void testAdlAdl() throws Exception {
-		final StockStorage stockStorage = StockStorageMock.getStockStorage();
 
 		final int aaplIndex = getStock("aapl").findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final int admIndex = getStock("adm").findDayIndex(new LocalDate(2011, 9, 4).toDate());
