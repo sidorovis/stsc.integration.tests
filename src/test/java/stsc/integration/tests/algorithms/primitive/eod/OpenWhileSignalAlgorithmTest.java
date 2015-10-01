@@ -1,6 +1,7 @@
-package stsc.integration.tests.algorithms.privitive.eod;
+package stsc.integration.tests.algorithms.primitive.eod;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,12 +24,13 @@ import stsc.general.trading.TradingLog;
 import stsc.general.trading.TradingRecord.TradingType;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.storage.ThreadSafeStockStorage;
 
 public class OpenWhileSignalAlgorithmTest {
 
 	@Test
-	public void testOpenWhileSignalAlgorithm() throws BadAlgorithmException, IOException, BadSignalException, ParseException {
+	public void testOpenWhileSignalAlgorithm() throws BadAlgorithmException, IOException, BadSignalException, ParseException, URISyntaxException {
 		final StockAlgoInitHelper inInit = new StockAlgoInitHelper("in", "aapl");
 		inInit.getSettings().setString("e", "open");
 		final Input in = new Input(inInit.getInit());
@@ -38,7 +40,7 @@ public class OpenWhileSignalAlgorithmTest {
 		levelInit.getSettings().setDouble("f", 667.0);
 		final Level level = new Level(levelInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(aapl);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);

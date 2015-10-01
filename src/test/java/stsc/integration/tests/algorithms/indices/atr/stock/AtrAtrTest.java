@@ -12,6 +12,7 @@ import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class AtrAtrTest {
@@ -24,7 +25,7 @@ public class AtrAtrTest {
 		atrAtrInit.getSettings().setInteger("size", 10000);
 		final AtrAtr atrAtr = new AtrAtr(atrAtrInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -34,17 +35,14 @@ public class AtrAtrTest {
 			final Day day = days.get(i);
 			atrAtr.process(day);
 
-			final double atrTrValue = stockInit.getStorage().getStockSignal("aapl", "atr_AtrTr", day.getDate())
-					.getContent(DoubleSignal.class).getValue();
-			final double value = stockInit.getStorage().getStockSignal("aapl", "atr", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double atrTrValue = stockInit.getStorage().getStockSignal("aapl", "atr_AtrTr", day.getDate()).getContent(DoubleSignal.class).getValue();
+			final double value = stockInit.getStorage().getStockSignal("aapl", "atr", day.getDate()).getContent(DoubleSignal.class).getValue();
 
 			if (i - aaplIndex < 14) {
 				sum += atrTrValue;
 				Assert.assertEquals(sum / (i - aaplIndex + 1), value, Settings.doubleEpsilon);
 			} else {
-				final double previousValue = stockInit.getStorage().getStockSignal("aapl", "atr", days.get(i - 1).getDate())
-						.getContent(DoubleSignal.class).getValue();
+				final double previousValue = stockInit.getStorage().getStockSignal("aapl", "atr", days.get(i - 1).getDate()).getContent(DoubleSignal.class).getValue();
 
 				Assert.assertEquals((previousValue * 13 + atrTrValue) / 14, value, Settings.doubleEpsilon);
 			}

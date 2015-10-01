@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.adx.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -16,19 +17,20 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class AdxAdxTest {
 
 	@Test
-	public void testAdxAdx() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testAdxAdx() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 
 		final StockAlgoInitHelper adxInit = new StockAlgoInitHelper("adx", "aapl", stockInit.getStorage());
 		adxInit.getSettings().setInteger("size", 10000);
 		final AdxAdx adx = new AdxAdx(adxInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -38,8 +40,7 @@ public class AdxAdxTest {
 			final Day day = days.get(i);
 			adx.process(day);
 
-			final double dxiV = adxInit.getStorage().getStockSignal("aapl", "adx_adxDxi", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double dxiV = adxInit.getStorage().getStockSignal("aapl", "adx_adxDxi", day.getDate()).getContent(DoubleSignal.class).getValue();
 			sum += dxiV;
 			final double adxV = adxInit.getStorage().getStockSignal("aapl", "adx", day.getDate()).getContent(DoubleSignal.class).getValue();
 			Assert.assertEquals(sum / (i - aaplIndex + 1), adxV, Settings.doubleEpsilon);

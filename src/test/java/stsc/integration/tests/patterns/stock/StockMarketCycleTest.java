@@ -14,6 +14,7 @@ import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class StockMarketCycleTest {
@@ -22,7 +23,7 @@ public class StockMarketCycleTest {
 		final StockAlgoInitHelper smcInit = new StockAlgoInitHelper("smc", sn);
 		final StockMarketCycle smc = new StockMarketCycle(smcInit.getInit());
 
-		final Stock stock = UnitedFormatStock.readFromUniteFormatFile("./test_data/" + sn + UnitedFormatStock.EXTENSION);
+		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn + UnitedFormatStock.EXTENSION));
 		final int stockIndex = stock.findDayIndex(new LocalDate(1990, 9, 4).toDate());
 		final ArrayList<Day> days = stock.getDays();
 
@@ -51,9 +52,9 @@ public class StockMarketCycleTest {
 		testHelper("apa");
 		testHelper("spy");
 	}
-	
+
 	@Test
 	public void testOnSpy() {
-		
+
 	}
 }

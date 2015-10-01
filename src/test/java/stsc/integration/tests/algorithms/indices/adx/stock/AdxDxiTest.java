@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.adx.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -17,20 +18,21 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 
 public class AdxDxiTest {
 
 	@Test
-	public void testAdxDxi() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testAdxDxi() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 
 		final StockAlgoInitHelper adxInit = new StockAlgoInitHelper("adx", "aapl", stockInit.getStorage());
 		adxInit.getSettings().setInteger("size", 10000);
 		final AdxDxi adxDxi = new AdxDxi(adxInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -38,8 +40,7 @@ public class AdxDxiTest {
 			final Day day = days.get(i);
 			adxDxi.process(day);
 
-			final Optional<ListOfDoubleSignal> s = adxInit.getStorage().getStockSignal("aapl", "adx_adxSmaDiName", day.getDate())
-					.getSignal(ListOfDoubleSignal.class);
+			final Optional<ListOfDoubleSignal> s = adxInit.getStorage().getStockSignal("aapl", "adx_adxSmaDiName", day.getDate()).getSignal(ListOfDoubleSignal.class);
 
 			if (!s.isPresent()) {
 				return;

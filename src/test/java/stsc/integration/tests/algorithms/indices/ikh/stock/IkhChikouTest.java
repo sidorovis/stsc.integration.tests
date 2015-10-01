@@ -12,6 +12,7 @@ import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class IkhChikouTest {
@@ -26,15 +27,14 @@ public class IkhChikouTest {
 		chikouInit.getSettings().setInteger("TM", tm);
 		final IkhChikou chikou = new IkhChikou(chikouInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
 		for (int i = aaplIndex; i < days.size(); ++i) {
 			final Day day = days.get(i);
 			chikou.process(day);
-			final double v = stockInit.getStorage().getStockSignal("aapl", "chikou", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double v = stockInit.getStorage().getStockSignal("aapl", "chikou", day.getDate()).getContent(DoubleSignal.class).getValue();
 			if (i - aaplIndex < tm) {
 				Assert.assertEquals(days.get(aaplIndex).getPrices().getClose(), v, Settings.doubleEpsilon);
 			} else {

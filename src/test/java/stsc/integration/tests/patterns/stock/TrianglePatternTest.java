@@ -16,6 +16,7 @@ import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 
@@ -36,13 +37,13 @@ public class TrianglePatternTest {
 		tpInit.getSettings().setInteger("N", 9);
 		final TrianglePattern tp = new TrianglePattern(tpInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/" + sn + UnitedFormatStock.EXTENSION);
-		final int aaplIndex = aapl.findDayIndex(new LocalDate(1990, 9, 4).toDate());
-		final ArrayList<Day> days = aapl.getDays();
+		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn + UnitedFormatStock.EXTENSION));
+		final int stockIndex = stock.findDayIndex(new LocalDate(1990, 9, 4).toDate());
+		final ArrayList<Day> days = stock.getDays();
 
 		final SignalsStorage ss = iniHigh.getStorage();
 
-		for (int i = aaplIndex; i < days.size(); ++i) {
+		for (int i = stockIndex; i < days.size(); ++i) {
 			final Day day = days.get(i);
 			inHigh.process(day);
 			inLow.process(day);
@@ -57,8 +58,8 @@ public class TrianglePatternTest {
 			final double x = v.get(1);
 			final double y = v.get(2);
 
-			Assert.assertTrue(x >= (i - aaplIndex + 2));
-			Assert.assertTrue(x <= (i - aaplIndex + 3));
+			Assert.assertTrue(x >= (i - stockIndex + 2));
+			Assert.assertTrue(x <= (i - stockIndex + 3));
 
 			final double maxLineStdDev = ss.getStockSignal(sn, "tp_Max", day.getDate()).getContent(DoubleSignal.class).getValue();
 			final double minLineStdDev = ss.getStockSignal(sn, "tp_Min", day.getDate()).getContent(DoubleSignal.class).getValue();

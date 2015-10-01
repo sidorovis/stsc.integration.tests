@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.adx.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -16,19 +17,20 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.ListOfDoubleSignal;
 
 public class AdxDmTest {
 
 	@Test
-	public void testAdxDm() throws BadAlgorithmException, ParseException, IOException, BadSignalException {
+	public void testAdxDm() throws BadAlgorithmException, ParseException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 
 		final StockAlgoInitHelper admInit = new StockAlgoInitHelper("adm", "aapl", stockInit.getStorage());
 		admInit.getSettings().setInteger("size", 10000);
 		final AdxDm adm = new AdxDm(admInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -37,19 +39,17 @@ public class AdxDmTest {
 			adm.process(day);
 		}
 
-		Assert.assertEquals(0.0,
-				admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex).getDate()).getContent(ListOfDoubleSignal.class)
-						.getValues().get(0), Settings.doubleEpsilon);
-		Assert.assertEquals(0.0,
-				admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex).getDate()).getContent(ListOfDoubleSignal.class)
-						.getValues().get(1), Settings.doubleEpsilon);
+		Assert.assertEquals(0.0, admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex).getDate()).getContent(ListOfDoubleSignal.class).getValues().get(0),
+				Settings.doubleEpsilon);
+		Assert.assertEquals(0.0, admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex).getDate()).getContent(ListOfDoubleSignal.class).getValues().get(1),
+				Settings.doubleEpsilon);
 
-		Assert.assertEquals(Math.max(days.get(aaplIndex).getPrices().getLow() - days.get(aaplIndex + 1).getPrices().getLow(), 0.0), admInit
-				.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex + 1).getDate()).getContent(ListOfDoubleSignal.class)
-				.getValues().get(0), Settings.doubleEpsilon);
+		Assert.assertEquals(Math.max(days.get(aaplIndex).getPrices().getLow() - days.get(aaplIndex + 1).getPrices().getLow(), 0.0),
+				admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex + 1).getDate()).getContent(ListOfDoubleSignal.class).getValues().get(0),
+				Settings.doubleEpsilon);
 		Assert.assertEquals(Math.max(0.0, days.get(aaplIndex + 1).getPrices().getHigh() - days.get(aaplIndex).getPrices().getHigh()),
-				admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex + 1).getDate()).getContent(ListOfDoubleSignal.class)
-						.getValues().get(1), Settings.doubleEpsilon);
+				admInit.getStorage().getStockSignal("aapl", "adm", days.get(aaplIndex + 1).getDate()).getContent(ListOfDoubleSignal.class).getValues().get(1),
+				Settings.doubleEpsilon);
 
 	}
 }

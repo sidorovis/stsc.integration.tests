@@ -1,7 +1,5 @@
 package stsc.integration.tests.algorithms.indices.rsi.stock;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.joda.time.LocalDate;
@@ -10,19 +8,18 @@ import org.junit.Test;
 
 import stsc.algorithms.indices.rsi.stock.RsiD;
 import stsc.algorithms.indices.rsi.stock.RsiU;
-import stsc.common.BadSignalException;
 import stsc.common.Day;
 import stsc.common.Settings;
-import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class RsiURsiDTest {
 
 	@Test
-	public void testRsiURsiD() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testRsiURsiD() throws Exception {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 
 		final StockAlgoInitHelper rsiDinit = new StockAlgoInitHelper("rsiD", "aapl", stockInit.getStorage());
@@ -33,7 +30,7 @@ public class RsiURsiDTest {
 		rsiUinit.getSettings().setInteger("size", 10000);
 		final RsiU rsiu = new RsiU(rsiUinit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -43,10 +40,8 @@ public class RsiURsiDTest {
 			rsiu.process(day);
 
 			if (i > aaplIndex) {
-				final double rsidValue = stockInit.getStorage().getStockSignal("aapl", "rsiD", i - aaplIndex).getContent(DoubleSignal.class)
-						.getValue();
-				final double rsiuValue = stockInit.getStorage().getStockSignal("aapl", "rsiU", i - aaplIndex).getContent(DoubleSignal.class)
-						.getValue();
+				final double rsidValue = stockInit.getStorage().getStockSignal("aapl", "rsiD", i - aaplIndex).getContent(DoubleSignal.class).getValue();
+				final double rsiuValue = stockInit.getStorage().getStockSignal("aapl", "rsiU", i - aaplIndex).getContent(DoubleSignal.class).getValue();
 
 				final double closeNow = day.getPrices().getClose();
 				final double closePrevious = days.get(i - 1).getPrices().getClose();

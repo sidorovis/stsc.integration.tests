@@ -1,6 +1,5 @@
 package stsc.integration.tests.algorithms;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -20,13 +19,10 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class ListOfDoubleAdapterTest {
-
-	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(ListOfDoubleAdapterTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
-	}
 
 	@Test
 	public void testListOfDoubleAdapter() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
@@ -51,7 +47,7 @@ public class ListOfDoubleAdapterTest {
 		adapterHighInit.getSettings().setInteger("I", 1);
 		final ListOfDoubleAdapter adapterHigh = new ListOfDoubleAdapter(adapterHighInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

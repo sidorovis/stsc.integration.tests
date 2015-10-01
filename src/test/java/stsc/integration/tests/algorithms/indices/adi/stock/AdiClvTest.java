@@ -13,6 +13,7 @@ import stsc.common.stocks.Prices;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class AdiClvTest {
@@ -24,7 +25,7 @@ public class AdiClvTest {
 		final StockAlgoInitHelper clvInit = new StockAlgoInitHelper("clv", "aapl", stockInit.getStorage());
 		final AdiClv clv = new AdiClv(clvInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -34,8 +35,7 @@ public class AdiClvTest {
 			final Prices p = day.getPrices();
 			final double denominator = p.getHigh() - p.getLow();
 			final double expected = ((p.getClose() - p.getLow() - (p.getHigh() - p.getClose()))) / (denominator);
-			Assert.assertEquals(expected, stockInit.getStorage().getStockSignal("aapl", "clv", day.getDate()).getContent(DoubleSignal.class)
-					.getValue(), Settings.doubleEpsilon);
+			Assert.assertEquals(expected, stockInit.getStorage().getStockSignal("aapl", "clv", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 		}
 	}
 

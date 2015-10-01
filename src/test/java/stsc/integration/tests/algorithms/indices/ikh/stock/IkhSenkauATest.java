@@ -11,6 +11,7 @@ import stsc.common.Day;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 
 public class IkhSenkauATest {
 
@@ -28,7 +29,7 @@ public class IkhSenkauATest {
 		sAInit.getSettings().setInteger("TM", tm);
 		final IkhSenkauA senkauA = new IkhSenkauA(sAInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

@@ -1,8 +1,7 @@
-package stsc.integration.tests.algorithms.privitive.eod;
+package stsc.integration.tests.algorithms.primitive.eod;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
+import java.net.URISyntaxException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.junit.Test;
 import stsc.algorithms.AlgorithmSettingsImpl;
 import stsc.algorithms.Input;
 import stsc.algorithms.primitive.eod.PositionNDayMStocks;
-import stsc.common.BadSignalException;
 import stsc.common.FromToPeriod;
 import stsc.common.Settings;
 import stsc.common.algorithms.BadAlgorithmException;
@@ -24,9 +22,14 @@ import stsc.general.statistic.MetricType;
 import stsc.general.statistic.Metrics;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.storage.mocks.StockStorageMock;
 
 public class PositionNDayMStocksTest {
+
+	final private File resourceToPath(final String resourcePath) throws URISyntaxException {
+		return new File(PositionNDayMStocksTest.class.getResource(resourcePath).toURI());
+	}
 
 	@Test
 	public void testPositionNDayMStocksException() {
@@ -41,16 +44,16 @@ public class PositionNDayMStocksTest {
 
 	@Test
 	public void testPositionNDayMStocks() throws Exception {
-		Metrics s = Simulator.fromFile(new File("./test_data/simulator_tests/ndays.ini")).getMetrics();
+		Metrics s = Simulator.fromFile(resourceToPath("simulator_tests/ndays.ini")).getMetrics();
 		Assert.assertNotNull(s);
 		Assert.assertEquals(550.0, s.getMetric(MetricType.period), Settings.doubleEpsilon);
 		Assert.assertEquals(-21.784509, s.getMetric(MetricType.avGain), Settings.doubleEpsilon);
 	}
 
-	private void testHelper(String side) throws BadAlgorithmException, BadSignalException, ParseException, IOException {
+	private void testHelper(String side) throws Exception {
 		final FromToPeriod period = new FromToPeriod("01-01-2000", "31-12-2013");
 		final StockStorage stockStorage = StockStorageMock.getStockStorage();
-		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile("./test_data/apa.uf"));
+		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa.uf")));
 		final TradeProcessorInit init = new TradeProcessorInit(stockStorage, period);
 
 		final AlgorithmSettingsImpl in = new AlgorithmSettingsImpl(period);
@@ -70,7 +73,7 @@ public class PositionNDayMStocksTest {
 	}
 
 	@Test
-	public void testStaticPositionNDayMStocks() throws ParseException, BadAlgorithmException, BadSignalException, IOException {
+	public void testStaticPositionNDayMStocks() throws Exception {
 		testHelper("long");
 		testHelper("short");
 	}

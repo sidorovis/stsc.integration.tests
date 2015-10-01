@@ -1,7 +1,5 @@
 package stsc.integration.tests.algorithms.geometry.stock;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -16,15 +14,11 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class FibonacciRetracementBullStdDevTest {
-
-	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
-	}
 
 	@Test
 	public void testFibonacciRetracementBullStdDev() throws Exception {
@@ -37,7 +31,7 @@ public class FibonacciRetracementBullStdDevTest {
 		frInit.getSettings().setInteger("N", 4);
 		final FibonacciRetracementBullStdDev fr = new FibonacciRetracementBullStdDev(frInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2005, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

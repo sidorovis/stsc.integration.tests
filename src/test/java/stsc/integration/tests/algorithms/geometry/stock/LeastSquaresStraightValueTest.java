@@ -1,7 +1,5 @@
 package stsc.integration.tests.algorithms.geometry.stock;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +15,11 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.ListOfDoubleSignal;
 
 public class LeastSquaresStraightValueTest {
-
-	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
-	}
 
 	@Test
 	public void testMatrixLinearCalculation() {
@@ -53,7 +47,7 @@ public class LeastSquaresStraightValueTest {
 		lssInit.getSettings().addSubExecutionName("in");
 		final LeastSquaresStraightValue lss = new LeastSquaresStraightValue(lssInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

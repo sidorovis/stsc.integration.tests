@@ -1,7 +1,5 @@
 package stsc.integration.tests.algorithms.indices.stock;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import org.joda.time.LocalDate;
@@ -13,15 +11,11 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class MarketTrendTest {
-
-	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
-	}
 
 	@Test
 	public void testMarketTrend() throws Exception {
@@ -31,11 +25,11 @@ public class MarketTrendTest {
 		final StockAlgoInitHelper aaplInit = new StockAlgoInitHelper("in", "aapl", spyInit.getStorage());
 		final MarketTrend aaplMt = new MarketTrend(aaplInit.getInit());
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("spy.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
 		final int spyIndex = spy.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> spyDays = spy.getDays();
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> aaplDays = aapl.getDays();
 

@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.macd.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -17,12 +18,13 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class MacdMacdTest {
 
 	@Test
-	public void testMacdMacd() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testMacdMacd() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 		final Input in = new Input(stockInit.getInit());
 
@@ -30,7 +32,7 @@ public class MacdMacdTest {
 		macdInit.getSettings().addSubExecutionName("in");
 		final MacdMacd macd = new MacdMacd(macdInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -39,10 +41,8 @@ public class MacdMacdTest {
 			in.process(day);
 			macd.process(day);
 
-			final double s = stockInit.getStorage().getStockSignal("aapl", "macd_EmaS", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
-			final double l = stockInit.getStorage().getStockSignal("aapl", "macd_EmaL", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double s = stockInit.getStorage().getStockSignal("aapl", "macd_EmaS", day.getDate()).getContent(DoubleSignal.class).getValue();
+			final double l = stockInit.getStorage().getStockSignal("aapl", "macd_EmaL", day.getDate()).getContent(DoubleSignal.class).getValue();
 			final double v = stockInit.getStorage().getStockSignal("aapl", "macd", day.getDate()).getContent(DoubleSignal.class).getValue();
 
 			Assert.assertEquals(s - l, v, Settings.doubleEpsilon);

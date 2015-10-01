@@ -14,6 +14,7 @@ import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class IkhPrototypeTest {
@@ -89,7 +90,7 @@ public class IkhPrototypeTest {
 		senkouAInit.getSettings().setInteger("size", 10000);
 		final IkhPrototype senkoA = new IkhPrototype(senkouAInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -103,8 +104,7 @@ public class IkhPrototypeTest {
 					highMax = Math.max(highMax, days.get(u).getPrices().getHigh());
 					lowMin = Math.min(lowMin, days.get(u).getPrices().getLow());
 				}
-				final double vSenkou = stockInit.getStorage().getStockSignal("aapl", "senkouA", day.getDate())
-						.getContent(DoubleSignal.class).getValue();
+				final double vSenkou = stockInit.getStorage().getStockSignal("aapl", "senkouA", day.getDate()).getContent(DoubleSignal.class).getValue();
 				Assert.assertEquals((highMax + lowMin) / 2.0, vSenkou, Settings.doubleEpsilon);
 			}
 		}
@@ -128,7 +128,7 @@ public class IkhPrototypeTest {
 		tenkanInit.getSettings().setInteger("size", 10000);
 		final IkhTenkan tenkan = new IkhTenkan(tenkanInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -137,10 +137,8 @@ public class IkhPrototypeTest {
 			prototype.process(day);
 			tenkan.process(day);
 			if (i - tm - ts >= aaplIndex) {
-				final double vPrototype = stockInit.getStorage().getStockSignal("aapl", "prototype", day.getDate())
-						.getContent(DoubleSignal.class).getValue();
-				final double vTenkan = stockInit.getStorage().getStockSignal("aapl", "tenkan", day.getDate()).getContent(DoubleSignal.class)
-						.getValue();
+				final double vPrototype = stockInit.getStorage().getStockSignal("aapl", "prototype", day.getDate()).getContent(DoubleSignal.class).getValue();
+				final double vTenkan = stockInit.getStorage().getStockSignal("aapl", "tenkan", day.getDate()).getContent(DoubleSignal.class).getValue();
 				Assert.assertEquals(vTenkan, vPrototype, Settings.doubleEpsilon);
 			}
 		}

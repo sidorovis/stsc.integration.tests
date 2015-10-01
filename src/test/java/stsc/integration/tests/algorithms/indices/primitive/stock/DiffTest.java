@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.primitive.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -20,12 +21,13 @@ import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class DiffTest {
 
 	@Test
-	public void testDiff() throws BadAlgorithmException, IOException, BadSignalException, ParseException {
+	public void testDiff() throws BadAlgorithmException, IOException, BadSignalException, ParseException, URISyntaxException {
 
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 		stockInit.getSettings().setString("e", "open");
@@ -46,7 +48,7 @@ public class DiffTest {
 		diffInit.getSettings().setInteger("size", 10000);
 		final Diff diff = new Diff(diffInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

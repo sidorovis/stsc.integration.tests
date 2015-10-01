@@ -13,6 +13,7 @@ import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 import stsc.signals.ListOfDoubleSignal;
 
@@ -27,7 +28,7 @@ public class LeastSquaresQuadraticStdDevTest {
 		lsqInit.getSettings().addSubExecutionName("in");
 		final LeastSquaresQuadraticStdDev lsqp = new LeastSquaresQuadraticStdDev(lsqInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2005, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -36,12 +37,9 @@ public class LeastSquaresQuadraticStdDevTest {
 			in.process(day);
 			lsqp.process(day);
 
-			final double a0 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class)
-					.getValues().get(0);
-			final double a1 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class)
-					.getValues().get(1);
-			final double a2 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class)
-					.getValues().get(2);
+			final double a0 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class).getValues().get(0);
+			final double a1 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class).getValues().get(1);
+			final double a2 = init.getStorage().getStockSignal("aapl", "lsqp_Lsq", day.getDate()).getContent(ListOfDoubleSignal.class).getValues().get(2);
 			double diffSum = 0.0;
 			double x = i - Math.min(5, i - aaplIndex);
 			for (int u = i - Math.min(5, i - aaplIndex); i + 1 > u; ++u) {

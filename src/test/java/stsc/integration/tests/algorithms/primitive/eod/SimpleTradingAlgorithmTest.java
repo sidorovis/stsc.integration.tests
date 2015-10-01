@@ -1,4 +1,4 @@
-package stsc.integration.tests.algorithms.privitive.eod;
+package stsc.integration.tests.algorithms.primitive.eod;
 
 import java.util.Date;
 import java.util.HashMap;

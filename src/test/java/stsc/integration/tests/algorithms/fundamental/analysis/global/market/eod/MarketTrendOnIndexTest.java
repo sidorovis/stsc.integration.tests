@@ -1,6 +1,5 @@
 package stsc.integration.tests.algorithms.fundamental.analysis.global.market.eod;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -19,23 +18,19 @@ import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.StockStorage;
 import stsc.general.trading.BrokerImpl;
-import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 import stsc.storage.ThreadSafeStockStorage;
 
 public class MarketTrendOnIndexTest {
 
-	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
-	}
-
 	@Test
 	public void marketTrendOnIndex() throws ParseException, IOException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("spy.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);

@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.primitive.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -17,12 +18,13 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 public class EmaTest {
 
 	@Test
-	public void testEma() throws IOException, BadSignalException, BadAlgorithmException, ParseException {
+	public void testEma() throws IOException, BadSignalException, BadAlgorithmException, ParseException, URISyntaxException {
 		final StockAlgoInitHelper inInit = new StockAlgoInitHelper("testIn", "aapl");
 		inInit.getSettings().setString("e", "open");
 		final Input inAlgo = new Input(inInit.getInit());
@@ -33,7 +35,7 @@ public class EmaTest {
 		emaInit.getSettings().addSubExecutionName("testIn");
 		final Ema ema = new Ema(emaInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -42,12 +44,11 @@ public class EmaTest {
 			inAlgo.process(day);
 			ema.process(day);
 		}
-		Assert.assertEquals(days.get(aaplIndex).getPrices().getOpen(),
-				emaInit.getStorage().getStockSignal("aapl", "testEma", 0).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
+		Assert.assertEquals(days.get(aaplIndex).getPrices().getOpen(), emaInit.getStorage().getStockSignal("aapl", "testEma", 0).getContent(DoubleSignal.class).getValue(),
+				Settings.doubleEpsilon);
 
 		final double secondValue = days.get(aaplIndex).getPrices().getOpen() * 0.7 + 0.3 * days.get(aaplIndex + 1).getPrices().getOpen();
-		Assert.assertEquals(secondValue,
-				emaInit.getStorage().getStockSignal("aapl", "testEma", 1).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
+		Assert.assertEquals(secondValue, emaInit.getStorage().getStockSignal("aapl", "testEma", 1).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 
 		double lastValue = 0.0;
 		final int size = emaInit.getStorage().getIndexSize("aapl", "testEma");
@@ -59,7 +60,6 @@ public class EmaTest {
 				lastValue = open * 0.3 + 0.7 * lastValue;
 			}
 		}
-		Assert.assertEquals(lastValue, emaInit.getStorage().getStockSignal("aapl", "testEma", size - 1).getContent(DoubleSignal.class)
-				.getValue(), Settings.doubleEpsilon);
+		Assert.assertEquals(lastValue, emaInit.getStorage().getStockSignal("aapl", "testEma", size - 1).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 	}
 }

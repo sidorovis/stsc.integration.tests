@@ -1,6 +1,7 @@
 package stsc.integration.tests.algorithms.indices.stock;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,6 +20,7 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
+import stsc.integration.tests.helper.TestAlgorithmsHelper;
 import stsc.signals.DoubleSignal;
 
 import com.google.common.collect.Multiset;
@@ -27,7 +29,7 @@ import com.google.common.collect.TreeMultiset;
 public class ResistanceLevelTest {
 
 	@Test
-	public void testResistanceLevel() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testResistanceLevel() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("testIn", "aapl");
 		stockInit.getSettings().setString("e", "open");
 		final Input inAlgo = new Input(stockInit.getInit());
@@ -36,15 +38,14 @@ public class ResistanceLevelTest {
 		rlInit.getSettings().addSubExecutionName("testIn");
 		final ResistanceLevel rl = new ResistanceLevel(rlInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2013, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
 		for (int i = aaplIndex; i < days.size(); ++i) {
 			inAlgo.process(days.get(i));
 			rl.process(days.get(i));
-			final double value = stockInit.getStorage().getStockSignal("aapl", "rl", i - aaplIndex).getContent(DoubleSignal.class)
-					.getValue();
+			final double value = stockInit.getStorage().getStockSignal("aapl", "rl", i - aaplIndex).getContent(DoubleSignal.class).getValue();
 
 			final Multiset<Double> maxValues = TreeMultiset.create(Comparator.reverseOrder());
 			final int mathMin = Math.min(i - aaplIndex, 66);
