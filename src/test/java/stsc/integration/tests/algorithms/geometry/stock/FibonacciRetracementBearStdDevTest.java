@@ -1,5 +1,7 @@
 package stsc.integration.tests.algorithms.geometry.stock;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -13,10 +15,15 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
+import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 import stsc.signals.DoubleSignal;
 
 public class FibonacciRetracementBearStdDevTest {
+
+	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
+		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
+	}
 
 	@Test
 	public void testFibonacciRetracementBearStdDev() throws Exception {
@@ -29,7 +36,7 @@ public class FibonacciRetracementBearStdDevTest {
 		frInit.getSettings().setInteger("N", 8);
 		final FibonacciRetracementBearStdDev fr = new FibonacciRetracementBearStdDev(frInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2005, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -43,18 +50,15 @@ public class FibonacciRetracementBearStdDevTest {
 			final Optional<DoubleSignal> v = init.getStorage().getStockSignal("aapl", "fr", day.getDate()).getSignal(DoubleSignal.class);
 			Assert.assertTrue(v.isPresent());
 			if (i - aaplIndex >= 8) {
-				final double firstP = init.getStorage().getStockSignal("aapl", "in", i - aaplIndex - 8).getSignal(DoubleSignal.class).get()
-						.getValue();
-				final double lastP = init.getStorage().getStockSignal("aapl", "in", i - aaplIndex).getSignal(DoubleSignal.class).get()
-						.getValue();
+				final double firstP = init.getStorage().getStockSignal("aapl", "in", i - aaplIndex - 8).getSignal(DoubleSignal.class).get().getValue();
+				final double lastP = init.getStorage().getStockSignal("aapl", "in", i - aaplIndex).getSignal(DoubleSignal.class).get().getValue();
 				if (lastP < firstP) {
 					final double diff = firstP - lastP;
 					double stdDev = 0.0;
 					for (int u = 1; u < len; ++u) {
 						final int mappedIndex = u * (8 / len);
 						final int index = i - aaplIndex - 8 + mappedIndex;
-						final double actualP = init.getStorage().getStockSignal("aapl", "in", index).getSignal(DoubleSignal.class).get()
-								.getValue();
+						final double actualP = init.getStorage().getStockSignal("aapl", "in", index).getSignal(DoubleSignal.class).get().getValue();
 						final double expectedP = firstP - FibonacciRetracementBearStdDev.ratios[u] * diff;
 						stdDev += Math.pow(expectedP - actualP, 2.0);
 					}

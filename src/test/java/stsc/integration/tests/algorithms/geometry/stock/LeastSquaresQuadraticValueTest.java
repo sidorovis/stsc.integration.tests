@@ -1,5 +1,7 @@
 package stsc.integration.tests.algorithms.geometry.stock;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,15 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
+import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 import stsc.signals.ListOfDoubleSignal;
 
 public class LeastSquaresQuadraticValueTest {
+
+	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
+		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
+	}
 
 	@Test
 	public void testMatrixLinearCalculation() {
@@ -55,7 +62,7 @@ public class LeastSquaresQuadraticValueTest {
 		lsqInit.getSettings().addSubExecutionName("in");
 		final LeastSquaresQuadraticValue lsq = new LeastSquaresQuadraticValue(lsqInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2001, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -64,8 +71,7 @@ public class LeastSquaresQuadraticValueTest {
 			in.process(day);
 			lsq.process(day);
 
-			final List<Double> values = init.getStorage().getStockSignal("aapl", "lsq", day.getDate()).getContent(ListOfDoubleSignal.class)
-					.getValues();
+			final List<Double> values = init.getStorage().getStockSignal("aapl", "lsq", day.getDate()).getContent(ListOfDoubleSignal.class).getValues();
 			Assert.assertEquals(3, values.size());
 
 			double sumXXXX = 0.0;
@@ -93,8 +99,7 @@ public class LeastSquaresQuadraticValueTest {
 		}
 	}
 
-	private void checkValues(List<Double> values, double sumXXXX, double sumXXX, double sumXX, double sumX, double sumXXY, double sumXY,
-			double sumY, double n, double y) {
+	private void checkValues(List<Double> values, double sumXXXX, double sumXXX, double sumXX, double sumX, double sumXXY, double sumXY, double sumY, double n, double y) {
 		final SimpleMatrix sm = new SimpleMatrix(3, 3);
 		sm.set(0, 0, sumXXXX);
 		sm.set(0, 1, sumXXX);

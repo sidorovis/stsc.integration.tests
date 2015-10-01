@@ -1,6 +1,8 @@
 package stsc.integration.tests.algorithms.fundamental.analysis.statistics.eod;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorSettings;
 import stsc.general.trading.BrokerImpl;
 import stsc.general.trading.TradeProcessorInit;
+import stsc.integration.tests.algorithms.StockAlgorithmTest;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 import stsc.signals.MapKeyPairToDoubleSignal;
@@ -32,11 +35,15 @@ import stsc.storage.mocks.StockStorageMock;
 
 public class AllToAllMovingPearsonCorrelationTest {
 
+	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
+		return new File(StockAlgorithmTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
+	}
+
 	@Test
-	public void testAllToAllMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
+	public void testAllToAllMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile("./test_data/spy.uf");
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("spy.uf"));
 		final MemoryStock spyCopy = new MemoryStock("spy2");
 		spyCopy.getDays().addAll(spy.getDays());
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
@@ -85,11 +92,11 @@ public class AllToAllMovingPearsonCorrelationTest {
 	}
 
 	@Test
-	public void testAllToAllMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException {
+	public void testAllToAllMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile("./test_data/spy.uf");
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("spy.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		stockStorage.updateStock(aapl);

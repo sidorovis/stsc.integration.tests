@@ -1,6 +1,8 @@
 package stsc.integration.tests.algorithms;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -22,8 +24,12 @@ import stsc.signals.DoubleSignal;
 
 public class ListOfDoubleAdapterTest {
 
+	final private String resourceToPath(final String resourcePath) throws URISyntaxException {
+		return new File(ListOfDoubleAdapterTest.class.getResource(resourcePath).toURI()).getAbsolutePath();
+	}
+
 	@Test
-	public void testListOfDoubleAdapter() throws ParseException, BadAlgorithmException, IOException, BadSignalException {
+	public void testListOfDoubleAdapter() throws ParseException, BadAlgorithmException, IOException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "aapl");
 		stockInit.getSettings().setString("e", "open");
 		final Input in = new Input(stockInit.getInit());
@@ -45,7 +51,7 @@ public class ListOfDoubleAdapterTest {
 		adapterHighInit.getSettings().setInteger("I", 1);
 		final ListOfDoubleAdapter adapterHigh = new ListOfDoubleAdapter(adapterHighInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile("./test_data/aapl.uf");
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(resourceToPath("aapl.uf"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -59,16 +65,12 @@ public class ListOfDoubleAdapterTest {
 
 		final Day lastDay = days.get(days.size() - 1);
 
-		final Double smaValue = bbInit.getStorage().getStockSignal("aapl", "BB_Sma_bb", lastDay.getDate()).getContent(DoubleSignal.class)
-				.getValue();
-		final Double stDevValue = bbInit.getStorage().getStockSignal("aapl", "BB_StDev_bb", lastDay.getDate())
-				.getContent(DoubleSignal.class).getValue();
+		final Double smaValue = bbInit.getStorage().getStockSignal("aapl", "BB_Sma_bb", lastDay.getDate()).getContent(DoubleSignal.class).getValue();
+		final Double stDevValue = bbInit.getStorage().getStockSignal("aapl", "BB_StDev_bb", lastDay.getDate()).getContent(DoubleSignal.class).getValue();
 
-		final Double bbLowValue = adapterInit.getStorage().getStockSignal("aapl", "adapter", lastDay.getDate())
-				.getContent(DoubleSignal.class).getValue();
+		final Double bbLowValue = adapterInit.getStorage().getStockSignal("aapl", "adapter", lastDay.getDate()).getContent(DoubleSignal.class).getValue();
 
-		final Double bbHighValue = adapterHighInit.getStorage().getStockSignal("aapl", "adapterHigh", lastDay.getDate())
-				.getContent(DoubleSignal.class).getValue();
+		final Double bbHighValue = adapterHighInit.getStorage().getStockSignal("aapl", "adapterHigh", lastDay.getDate()).getContent(DoubleSignal.class).getValue();
 
 		Assert.assertEquals(smaValue - 1.4 * stDevValue, bbLowValue, Settings.doubleEpsilon);
 		Assert.assertEquals(smaValue + 1.4 * stDevValue, bbHighValue, Settings.doubleEpsilon);
