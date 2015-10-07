@@ -53,7 +53,7 @@ public class PositionNDayMStocksTest {
 	private void testHelper(String side) throws Exception {
 		final FromToPeriod period = new FromToPeriod("01-01-2000", "31-12-2013");
 		final StockStorage stockStorage = StockStorageMock.getStockStorage();
-		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa.uf")));
+		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa")));
 		final TradeProcessorInit init = new TradeProcessorInit(stockStorage, period);
 
 		final AlgorithmSettingsImpl in = new AlgorithmSettingsImpl(period);

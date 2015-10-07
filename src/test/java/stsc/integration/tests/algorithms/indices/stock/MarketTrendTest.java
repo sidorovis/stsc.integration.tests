@@ -25,11 +25,11 @@ public class MarketTrendTest {
 		final StockAlgoInitHelper aaplInit = new StockAlgoInitHelper("in", "aapl", spyInit.getStorage());
 		final MarketTrend aaplMt = new MarketTrend(aaplInit.getInit());
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
 		final int spyIndex = spy.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> spyDays = spy.getDays();
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> aaplDays = aapl.getDays();
 

@@ -38,7 +38,7 @@ public class AllToAllMovingPearsonCorrelationTest {
 	public void testAllToAllMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
 		final MemoryStock spyCopy = new MemoryStock("spy2");
 		spyCopy.getDays().addAll(spy.getDays());
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
@@ -90,8 +90,8 @@ public class AllToAllMovingPearsonCorrelationTest {
 	public void testAllToAllMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		stockStorage.updateStock(aapl);

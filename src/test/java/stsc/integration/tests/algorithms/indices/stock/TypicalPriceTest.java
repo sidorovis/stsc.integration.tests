@@ -30,7 +30,7 @@ public class TypicalPriceTest {
 		tpInit.getSettings().setInteger("size", 10000);
 		final TypicalPrice tp = new TypicalPrice(tpInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

@@ -37,7 +37,7 @@ public class SmStDevTest {
 		smStDevInit.getSettings().addSubExecutionName("testIn").addSubExecutionName("testSma");
 		final SmStDev smStDev = new SmStDev(smStDevInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2013, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

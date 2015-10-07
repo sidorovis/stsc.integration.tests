@@ -40,7 +40,7 @@ public class OpenWhileSignalAlgorithmTest {
 		levelInit.getSettings().setDouble("f", 667.0);
 		final Level level = new Level(levelInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(aapl);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);

@@ -24,7 +24,7 @@ public class CciTest {
 		final StockAlgoInitHelper cciInit = new StockAlgoInitHelper("cci", "aapl", init.getStorage());
 		final Cci cci = new Cci(cciInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -32,11 +32,9 @@ public class CciTest {
 			final Day day = days.get(i);
 			cci.process(day);
 
-			final double tp = init.getStorage().getStockSignal("aapl", "cci_TypicalPrice", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double tp = init.getStorage().getStockSignal("aapl", "cci_TypicalPrice", day.getDate()).getContent(DoubleSignal.class).getValue();
 			final double sma = init.getStorage().getStockSignal("aapl", "cci_Sma", day.getDate()).getContent(DoubleSignal.class).getValue();
-			final double stdev = init.getStorage().getStockSignal("aapl", "cci_SmStDev", day.getDate()).getContent(DoubleSignal.class)
-					.getValue();
+			final double stdev = init.getStorage().getStockSignal("aapl", "cci_SmStDev", day.getDate()).getContent(DoubleSignal.class).getValue();
 
 			final double v = init.getStorage().getStockSignal("aapl", "cci", day.getDate()).getContent(DoubleSignal.class).getValue();
 

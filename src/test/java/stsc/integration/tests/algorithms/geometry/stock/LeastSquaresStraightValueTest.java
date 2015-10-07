@@ -47,7 +47,7 @@ public class LeastSquaresStraightValueTest {
 		lssInit.getSettings().addSubExecutionName("in");
 		final LeastSquaresStraightValue lss = new LeastSquaresStraightValue(lssInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

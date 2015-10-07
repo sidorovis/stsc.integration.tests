@@ -28,7 +28,7 @@ public class LeastSquaresQuadraticStdDevTest {
 		lsqInit.getSettings().addSubExecutionName("in");
 		final LeastSquaresQuadraticStdDev lsqp = new LeastSquaresQuadraticStdDev(lsqInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2005, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

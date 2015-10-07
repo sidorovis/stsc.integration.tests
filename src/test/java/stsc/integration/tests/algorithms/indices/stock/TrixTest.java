@@ -29,7 +29,7 @@ public class TrixTest {
 		trixInit.getSettings().addSubExecutionName("in");
 		final Trix trix = new Trix(trixInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -42,12 +42,9 @@ public class TrixTest {
 			if (i == aaplIndex) {
 				Assert.assertEquals(0.0, v, Settings.doubleEpsilon);
 			} else {
-				final double pTmaV = stockInit.getStorage().getStockSignal("aapl", "trix_Tma", days.get(i - 1).getDate())
-						.getContent(DoubleSignal.class).getValue();
-				final double tmaV = stockInit.getStorage().getStockSignal("aapl", "trix_Tma", day.getDate()).getContent(DoubleSignal.class)
-						.getValue();
-				final double p = stockInit.getStorage().getStockSignal("aapl", "trix", days.get(i).getDate()).getContent(DoubleSignal.class)
-						.getValue();
+				final double pTmaV = stockInit.getStorage().getStockSignal("aapl", "trix_Tma", days.get(i - 1).getDate()).getContent(DoubleSignal.class).getValue();
+				final double tmaV = stockInit.getStorage().getStockSignal("aapl", "trix_Tma", day.getDate()).getContent(DoubleSignal.class).getValue();
+				final double p = stockInit.getStorage().getStockSignal("aapl", "trix", days.get(i).getDate()).getContent(DoubleSignal.class).getValue();
 				Assert.assertEquals(100.0 * (tmaV - pTmaV) / pTmaV, p, Settings.doubleEpsilon);
 			}
 		}

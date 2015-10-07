@@ -23,7 +23,7 @@ public class StockMarketCycleTest {
 		final StockAlgoInitHelper smcInit = new StockAlgoInitHelper("smc", sn);
 		final StockMarketCycle smc = new StockMarketCycle(smcInit.getInit());
 
-		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn + UnitedFormatStock.EXTENSION));
+		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn));
 		final int stockIndex = stock.findDayIndex(new LocalDate(1990, 9, 4).toDate());
 		final ArrayList<Day> days = stock.getDays();
 
@@ -53,8 +53,4 @@ public class StockMarketCycleTest {
 		testHelper("spy");
 	}
 
-	@Test
-	public void testOnSpy() {
-
-	}
 }

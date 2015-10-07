@@ -53,7 +53,7 @@ public class SeveralLastMaxTest {
 		init.getSettings().addSubExecutionName("testIn");
 		final SeveralLastMax slm = new SeveralLastMax(init.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aa.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aa"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

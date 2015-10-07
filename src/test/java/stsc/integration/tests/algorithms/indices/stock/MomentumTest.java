@@ -27,7 +27,7 @@ public class MomentumTest {
 		momInit.getSettings().addSubExecutionName("in");
 		final Momentum mom = new Momentum(momInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2011, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
@@ -36,14 +36,13 @@ public class MomentumTest {
 			in.process(day);
 			mom.process(day);
 			if (i == aaplIndex) {
-				Assert.assertEquals(0.0, init.getStorage().getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class)
-						.getValue(), Settings.doubleEpsilon);
+				Assert.assertEquals(0.0, init.getStorage().getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 			} else if (i - aaplIndex < 5) {
-				Assert.assertEquals(days.get(i).getPrices().getOpen() - days.get(aaplIndex).getPrices().getOpen(), init.getStorage()
-						.getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
+				Assert.assertEquals(days.get(i).getPrices().getOpen() - days.get(aaplIndex).getPrices().getOpen(),
+						init.getStorage().getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 			} else {
-				Assert.assertEquals(days.get(i).getPrices().getOpen() - days.get(i - 5).getPrices().getOpen(), init.getStorage()
-						.getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
+				Assert.assertEquals(days.get(i).getPrices().getOpen() - days.get(i - 5).getPrices().getOpen(),
+						init.getStorage().getStockSignal("aapl", "mom", day.getDate()).getContent(DoubleSignal.class).getValue(), Settings.doubleEpsilon);
 			}
 		}
 	}

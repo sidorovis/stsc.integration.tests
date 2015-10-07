@@ -6,6 +6,7 @@ import java.util.Date;
 
 import stsc.algorithms.AlgorithmSettingsImpl;
 import stsc.common.FromToPeriod;
+import stsc.common.stocks.UnitedFormatHelper;
 
 public class TestAlgorithmsHelper {
 
@@ -22,7 +23,7 @@ public class TestAlgorithmsHelper {
 	}
 
 	final static public String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(TestAlgorithmsHelper.class.getResource(resourcePath).toURI()).getAbsolutePath();
+		return new File(TestAlgorithmsHelper.class.getResource(UnitedFormatHelper.toFilesystem(resourcePath).getFilename()).toURI()).getAbsolutePath();
 	}
 
 }

@@ -13,6 +13,7 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.signals.SignalContainer;
 import stsc.common.stocks.Stock;
+import stsc.common.stocks.UnitedFormatHelper;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
@@ -36,7 +37,7 @@ public class WedgePatternTest {
 		wpInit.getSettings().addSubExecutionName("inl");
 		final WedgePattern wp = new WedgePattern(wpInit.getInit());
 
-		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn + UnitedFormatStock.EXTENSION));
+		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(UnitedFormatHelper.toFilesystem(sn).getFilename()));
 		final int stockIndex = stock.findDayIndex(new LocalDate(1990, 9, 4).toDate());
 		final ArrayList<Day> days = stock.getDays();
 

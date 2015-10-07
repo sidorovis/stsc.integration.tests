@@ -31,7 +31,7 @@ public class FibonacciRetracementBullStdDevTest {
 		frInit.getSettings().setInteger("N", 4);
 		final FibonacciRetracementBullStdDev fr = new FibonacciRetracementBullStdDev(frInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2005, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 
