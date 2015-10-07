@@ -96,7 +96,7 @@ public class SupportLevelTest {
 		slInit.getSettings().addSubExecutionName("testIn");
 		final SupportLevel sl = new SupportLevel(slInit.getInit());
 
-		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl.uf"));
+		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
 		final int aaplIndex = aapl.findDayIndex(new LocalDate(2013, 9, 4).toDate());
 		final ArrayList<Day> days = aapl.getDays();
 

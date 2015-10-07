@@ -30,7 +30,7 @@ public class MarketTrendOnIndexTest {
 	public void marketTrendOnIndex() throws ParseException, IOException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
-		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy.uf"));
+		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
 		final StockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);

@@ -13,7 +13,6 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.signals.SignalContainer;
 import stsc.common.stocks.Stock;
-import stsc.common.stocks.UnitedFormatHelper;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
@@ -38,7 +37,7 @@ public class TrianglePatternTest {
 		tpInit.getSettings().setInteger("N", 9);
 		final TrianglePattern tp = new TrianglePattern(tpInit.getInit());
 
-		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(UnitedFormatHelper.toFilesystem(sn).getFilename()));
+		final Stock stock = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath(sn));
 		final int stockIndex = stock.findDayIndex(new LocalDate(1990, 9, 4).toDate());
 		final ArrayList<Day> days = stock.getDays();
 
