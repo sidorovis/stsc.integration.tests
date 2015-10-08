@@ -1,6 +1,6 @@
 package stsc.integration.tests.helper;
 
-import java.io.File;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Date;
 
@@ -22,8 +22,8 @@ public class TestAlgorithmsHelper {
 		return new AlgorithmSettingsImpl(getPeriod());
 	}
 
-	final static public String resourceToPath(final String resourcePath) throws URISyntaxException {
-		return new File(TestAlgorithmsHelper.class.getResource(UnitedFormatHelper.toFilesystem(resourcePath).getFilename()).toURI()).getAbsolutePath();
+	final static public InputStream resourceToPath(final String resourcePath) throws URISyntaxException {
+		return TestAlgorithmsHelper.class.getResourceAsStream(UnitedFormatHelper.toFilesystem(resourcePath).getFilename());
 	}
 
 }
