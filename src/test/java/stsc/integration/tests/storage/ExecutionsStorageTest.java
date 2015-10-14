@@ -30,7 +30,7 @@ public class ExecutionsStorageTest {
 
 		eStorage.addStockExecution(new StockExecution("t2", Sma.class, smaSettings));
 		eStorage.addEodExecution(new EodExecution("t1", TestingEodAlgorithm.class, TestAlgorithmsHelper.getSettings()));
-		ExecutionStarter es = eStorage.initialize(new BrokerImpl(stockStorage));
+		ExecutionStarter es = eStorage.initialize(new BrokerImpl(stockStorage), stockStorage.getStockNames());
 
 		Assert.assertEquals(1, es.getEodAlgorithmsSize());
 
@@ -55,7 +55,7 @@ public class ExecutionsStorageTest {
 
 		boolean throwed = false;
 		try {
-			es.initialize(new BrokerImpl(stockStorage));
+			es.initialize(new BrokerImpl(stockStorage), stockStorage.getStockNames());
 		} catch (BadAlgorithmException e) {
 			throwed = true;
 		}
