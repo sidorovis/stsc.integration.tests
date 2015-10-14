@@ -15,7 +15,6 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorSettings;
 import stsc.general.statistic.MetricType;
@@ -23,7 +22,7 @@ import stsc.general.statistic.Metrics;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
 import stsc.integration.tests.helper.TestAlgorithmsHelper;
-import stsc.storage.mocks.StockStorageMock;
+import stsc.storage.ThreadSafeStockStorage;
 
 public class PositionNDayMStocksTest {
 
@@ -52,7 +51,10 @@ public class PositionNDayMStocksTest {
 
 	private void testHelper(String side) throws Exception {
 		final FromToPeriod period = new FromToPeriod("01-01-2000", "31-12-2013");
-		final StockStorage stockStorage = StockStorageMock.getStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
+		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("adm")));
+		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl")));
+		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy")));
 		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa")));
 		final TradeProcessorInit init = new TradeProcessorInit(stockStorage, period);
 

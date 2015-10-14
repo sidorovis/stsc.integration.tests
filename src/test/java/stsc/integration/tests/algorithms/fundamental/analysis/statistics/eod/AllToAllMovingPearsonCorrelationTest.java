@@ -41,7 +41,7 @@ public class AllToAllMovingPearsonCorrelationTest {
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
 		final MemoryStock spyCopy = new MemoryStock("spy2");
 		spyCopy.getDays().addAll(spy.getDays());
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);
 		final EodAlgoInitHelper eodInit = new EodAlgoInitHelper("mt", stockInit.getStorage(), broker);
@@ -92,7 +92,7 @@ public class AllToAllMovingPearsonCorrelationTest {
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
 		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		stockStorage.updateStock(aapl);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);

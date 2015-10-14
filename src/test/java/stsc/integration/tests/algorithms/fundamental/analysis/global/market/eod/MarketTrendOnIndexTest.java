@@ -16,7 +16,6 @@ import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.common.storage.StockStorage;
 import stsc.general.trading.BrokerImpl;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
@@ -31,7 +30,7 @@ public class MarketTrendOnIndexTest {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(spy);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);
 		final EodAlgoInitHelper eodInit = new EodAlgoInitHelper("mt", stockInit.getStorage(), broker);

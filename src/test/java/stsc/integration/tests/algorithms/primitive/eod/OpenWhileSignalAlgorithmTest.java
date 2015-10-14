@@ -18,7 +18,6 @@ import stsc.common.Day;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.stocks.Stock;
 import stsc.common.stocks.UnitedFormatStock;
-import stsc.common.storage.StockStorage;
 import stsc.general.trading.BrokerImpl;
 import stsc.general.trading.TradingLog;
 import stsc.general.trading.TradingRecord.TradingType;
@@ -41,7 +40,7 @@ public class OpenWhileSignalAlgorithmTest {
 		final Level level = new Level(levelInit.getInit());
 
 		final Stock aapl = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("aapl"));
-		final StockStorage stockStorage = new ThreadSafeStockStorage();
+		final ThreadSafeStockStorage stockStorage = new ThreadSafeStockStorage();
 		stockStorage.updateStock(aapl);
 		final BrokerImpl broker = new BrokerImpl(stockStorage);
 
