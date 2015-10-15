@@ -1,18 +1,35 @@
 package stsc.integration.tests.algorithms.strategy_e1;
 
+import java.text.ParseException;
+
+import org.junit.Assert;
 import org.junit.Test;
 
+import stsc.algorithms.fundamental.analysis.statistics.eod.LeftToRightMovingPearsonCorrelation;
+import stsc.algorithms.strategy_e1.TradingSanguinaria;
+import stsc.common.BadSignalException;
+import stsc.common.FromToPeriod;
+import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.storage.StockStorage;
+import stsc.general.simulator.Simulator;
+import stsc.general.simulator.SimulatorSettings;
+import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.IntegrationStockStorageMock;
-import stsc.storage.mocks.StockStorageMock;
 
 public class TradingSanguinariaTest {
 
 	private final static StockStorage stockStorage = IntegrationStockStorageMock.getStockStorage();
 
 	@Test
-	public void testTradingSanguinaria() {
-
+	public void testTradingSanguinaria() throws ParseException, BadAlgorithmException, BadSignalException {
+		final String executionsConfig = //
+		"EodExecutions = test\n" + //
+				"test.loadLine = ." + TradingSanguinaria.class.getSimpleName() + "( " + //
+				LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(N=104i, LE=spy, ALLR=true)" + //
+				" )\n";
+		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-2000", "01-01-2020"), executionsConfig));
+		final Simulator simulator = new Simulator(simulatorSettings);
+		Assert.assertNotNull(simulator.getMetrics());
 	}
 
 }

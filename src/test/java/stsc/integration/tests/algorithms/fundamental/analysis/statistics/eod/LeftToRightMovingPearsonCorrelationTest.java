@@ -165,4 +165,21 @@ public class LeftToRightMovingPearsonCorrelationTest {
 		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, size - 2).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
 	}
 
+	@Test
+	public void testLeftToRightMovingPearsonCorrelationForAllFromRight() throws BadAlgorithmException, ParseException, BadSignalException {
+		final StockStorage stockStorage = StockStorageMock.getStockStorage();
+		final String executionName = "correlation";
+		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
+				"EodExecutions = " + executionName + "\n" + //
+						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i, LE=spy, ALLR = true)\n");
+		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, tradeProcessorInit);
+		final Simulator simulator = new Simulator(simulatorSettings);
+		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
+
+		final int size = signalsStorage.getIndexSize(executionName);
+		for (int i = 0; i < size; ++i) {
+			Assert.assertTrue(signalsStorage.getEodSignal(executionName, i).getValue().isPresent());
+		}
+		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, size - 2).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
+	}
 }
