@@ -33,7 +33,7 @@ public final class IntegrationStockStorageMock {
 		if (stockStorage == null) {
 			stockStorage = new ThreadSafeStockStorage();
 
-			final File folder = resourceToFile("./YahooStockStorageMockData");
+			final File folder = resourceToFile("./IntegrationStockStorageMockData");
 			final File[] listOfFiles = folder.listFiles();
 			for (File file : listOfFiles) {
 				final String filename = file.getName();
