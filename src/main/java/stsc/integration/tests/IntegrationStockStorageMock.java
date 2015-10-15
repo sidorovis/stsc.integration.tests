@@ -29,21 +29,24 @@ public final class IntegrationStockStorageMock {
 		return new File(IntegrationStockStorageMock.class.getResource(resourcePath).toURI());
 	}
 
-	public static synchronized StockStorage getStockStorage() throws URISyntaxException, IOException {
+	public static synchronized StockStorage getStockStorage() {
 		if (stockStorage == null) {
 			stockStorage = new ThreadSafeStockStorage();
-
-			final File folder = resourceToFile("./IntegrationStockStorageMockData");
-			final File[] listOfFiles = folder.listFiles();
-			for (File file : listOfFiles) {
-				final String filename = file.getName();
-				if (file.isFile() && filename.startsWith(UnitedFormatHelper.getPrefix()) && filename.endsWith(UnitedFormatHelper.getExtension())) {
-					try (InputStream is = new FileInputStream(file)) {
-						stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(is));
+			try {
+				final File folder = resourceToFile("./IntegrationStockStorageMockData");
+				final File[] listOfFiles = folder.listFiles();
+				for (File file : listOfFiles) {
+					final String filename = file.getName();
+					if (file.isFile() && filename.startsWith(UnitedFormatHelper.getPrefix()) && filename.endsWith(UnitedFormatHelper.getExtension())) {
+						try (InputStream is = new FileInputStream(file)) {
+							stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(is));
+						}
 					}
 				}
+			} catch (URISyntaxException | IOException e) {
+				// do nothing, it only for test purposes and we have special
+				// junit test that cover errors in here
 			}
-
 		}
 		return stockStorage;
 	}
