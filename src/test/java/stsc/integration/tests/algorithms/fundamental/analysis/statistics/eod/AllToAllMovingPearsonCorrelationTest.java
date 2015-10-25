@@ -35,7 +35,8 @@ import stsc.storage.mocks.StockStorageMock;
 public class AllToAllMovingPearsonCorrelationTest {
 
 	@Test
-	public void testAllToAllMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
+	public void testAllToAllMovingPearsonCorrelationForStockWithItself()
+			throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
@@ -87,7 +88,8 @@ public class AllToAllMovingPearsonCorrelationTest {
 	}
 
 	@Test
-	public void testAllToAllMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
+	public void testAllToAllMovingPearsonCorrelationForSpyToAapl()
+			throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
@@ -156,7 +158,8 @@ public class AllToAllMovingPearsonCorrelationTest {
 		for (int i = 0; i < size; ++i) {
 			Assert.assertTrue(signalsStorage.getEodSignal(executionName, i).getValue().isPresent());
 		}
-		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, size - 2).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
+		Assert.assertEquals(3,
+				signalsStorage.getEodSignal(executionName, new LocalDate(2014, 2, 24).toDate()).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
 	}
 
 }
