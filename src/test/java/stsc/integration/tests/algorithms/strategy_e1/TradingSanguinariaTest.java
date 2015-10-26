@@ -29,7 +29,8 @@ public class TradingSanguinariaTest {
 				LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(N=104i, LE=spy, ALLR=true)" + //
 				" )\n";
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-2000", "01-01-2020"), executionsConfig));
-		final Simulator simulator = new SimulatorImpl(simulatorSettings);
+		final Simulator simulator = new SimulatorImpl();
+		simulator.simulateMarketTrading(simulatorSettings);
 		Assert.assertNotNull(simulator.getMetrics());
 	}
 

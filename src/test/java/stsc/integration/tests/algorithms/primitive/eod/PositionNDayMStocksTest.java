@@ -70,7 +70,8 @@ public class PositionNDayMStocksTest {
 		positionNDayMStocks.addSubExecutionName("in");
 		init.getExecutionsStorage().addEodExecution(new EodExecution("positionNDayMStocks", PositionNDayMStocks.class, positionNDayMStocks));
 
-		final Simulator simulator = new SimulatorImpl(new SimulatorSettings(0, init));
+		final Simulator simulator = new SimulatorImpl();
+		simulator.simulateMarketTrading(new SimulatorSettings(0, init));
 		final Metrics s = simulator.getMetrics();
 		Assert.assertEquals(0.247656, s.getMetric(MetricType.freq), Settings.doubleEpsilon);
 	}

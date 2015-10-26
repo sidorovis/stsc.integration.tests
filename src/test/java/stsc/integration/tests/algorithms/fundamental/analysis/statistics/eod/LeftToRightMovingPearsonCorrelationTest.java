@@ -36,8 +36,7 @@ import stsc.storage.mocks.StockStorageMock;
 public class LeftToRightMovingPearsonCorrelationTest {
 
 	@Test
-	public void testLeftToRightMovingPearsonCorrelationForStockWithItself()
-			throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
+	public void testLeftToRightMovingPearsonCorrelationForStockWithItself() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
@@ -93,8 +92,7 @@ public class LeftToRightMovingPearsonCorrelationTest {
 	}
 
 	@Test
-	public void testLeftToRightMovingPearsonCorrelationForSpyToAapl()
-			throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
+	public void testLeftToRightMovingPearsonCorrelationForSpyToAapl() throws IOException, ParseException, BadAlgorithmException, BadSignalException, URISyntaxException {
 		final StockAlgoInitHelper stockInit = new StockAlgoInitHelper("in", "spy");
 
 		final Stock spy = UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("spy"));
@@ -156,18 +154,17 @@ public class LeftToRightMovingPearsonCorrelationTest {
 		final String executionName = "correlation";
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
 				"EodExecutions = " + executionName + "\n" + //
-						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName()
-						+ "(size=10000i, LE=spy, RE=aapl|adm|spy)\n");
+						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i, LE=spy, RE=aapl|adm|spy)\n");
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, tradeProcessorInit);
-		final Simulator simulator = new SimulatorImpl(simulatorSettings);
+		final Simulator simulator = new SimulatorImpl();
+		simulator.simulateMarketTrading(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
 
 		final int size = signalsStorage.getIndexSize(executionName);
 		for (int i = 0; i < size; ++i) {
 			Assert.assertTrue(signalsStorage.getEodSignal(executionName, i).getValue().isPresent());
 		}
-		Assert.assertEquals(3,
-				signalsStorage.getEodSignal(executionName, new LocalDate(2014, 2, 24).toDate()).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
+		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, new LocalDate(2014, 2, 24).toDate()).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
 	}
 
 	@Test
@@ -178,14 +175,14 @@ public class LeftToRightMovingPearsonCorrelationTest {
 				"EodExecutions = " + executionName + "\n" + //
 						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i, LE=spy, ALLR = true)\n");
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, tradeProcessorInit);
-		final Simulator simulator = new SimulatorImpl(simulatorSettings);
+		final Simulator simulator = new SimulatorImpl();
+		simulator.simulateMarketTrading(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
 
 		final int size = signalsStorage.getIndexSize(executionName);
 		for (int i = 0; i < size; ++i) {
 			Assert.assertTrue(signalsStorage.getEodSignal(executionName, i).getValue().isPresent());
 		}
-		Assert.assertEquals(3,
-				signalsStorage.getEodSignal(executionName, new LocalDate(2014, 2, 24).toDate()).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
+		Assert.assertEquals(3, signalsStorage.getEodSignal(executionName, new LocalDate(2014, 2, 24).toDate()).getContent(MapKeyPairToDoubleSignal.class).getValues().size());
 	}
 }
