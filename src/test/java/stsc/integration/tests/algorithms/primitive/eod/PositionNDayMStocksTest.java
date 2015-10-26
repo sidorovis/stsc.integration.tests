@@ -16,6 +16,7 @@ import stsc.common.algorithms.EodExecution;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.stocks.UnitedFormatStock;
 import stsc.general.simulator.Simulator;
+import stsc.general.simulator.SimulatorImpl;
 import stsc.general.simulator.SimulatorSettings;
 import stsc.general.statistic.MetricType;
 import stsc.general.statistic.Metrics;
@@ -43,7 +44,7 @@ public class PositionNDayMStocksTest {
 
 	@Test
 	public void testPositionNDayMStocks() throws Exception {
-		Metrics s = Simulator.fromFile(resourceToPath("simulator_tests/ndays.ini")).getMetrics();
+		Metrics s = SimulatorImpl.fromFile(resourceToPath("simulator_tests/ndays.ini")).getMetrics();
 		Assert.assertNotNull(s);
 		Assert.assertEquals(550.0, s.getMetric(MetricType.period), Settings.doubleEpsilon);
 		Assert.assertEquals(-21.784509, s.getMetric(MetricType.avGain), Settings.doubleEpsilon);
@@ -69,7 +70,7 @@ public class PositionNDayMStocksTest {
 		positionNDayMStocks.addSubExecutionName("in");
 		init.getExecutionsStorage().addEodExecution(new EodExecution("positionNDayMStocks", PositionNDayMStocks.class, positionNDayMStocks));
 
-		final Simulator simulator = new Simulator(new SimulatorSettings(0, init));
+		final Simulator simulator = new SimulatorImpl(new SimulatorSettings(0, init));
 		final Metrics s = simulator.getMetrics();
 		Assert.assertEquals(0.247656, s.getMetric(MetricType.freq), Settings.doubleEpsilon);
 	}

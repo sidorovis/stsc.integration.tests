@@ -12,6 +12,7 @@ import stsc.common.FromToPeriod;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
+import stsc.general.simulator.SimulatorImpl;
 import stsc.general.simulator.SimulatorSettings;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.IntegrationStockStorageMock;
@@ -28,7 +29,7 @@ public class TradingSanguinariaTest {
 				LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(N=104i, LE=spy, ALLR=true)" + //
 				" )\n";
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-2000", "01-01-2020"), executionsConfig));
-		final Simulator simulator = new Simulator(simulatorSettings);
+		final Simulator simulator = new SimulatorImpl(simulatorSettings);
 		Assert.assertNotNull(simulator.getMetrics());
 	}
 

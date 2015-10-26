@@ -22,6 +22,7 @@ import stsc.common.stocks.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
+import stsc.general.simulator.SimulatorImpl;
 import stsc.general.simulator.SimulatorSettings;
 import stsc.general.trading.BrokerImpl;
 import stsc.general.trading.TradeProcessorInit;
@@ -151,7 +152,7 @@ public class AllToAllMovingPearsonCorrelationTest {
 				"EodExecutions = " + executionName + "\n" + //
 						executionName + ".loadLine = ." + AllToAllMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i)\n");
 		final SimulatorSettings simulatorSettings = new SimulatorSettings(0, tradeProcessorInit);
-		final Simulator simulator = new Simulator(simulatorSettings);
+		final Simulator simulator = new SimulatorImpl(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
 
 		final int size = signalsStorage.getIndexSize(executionName);
