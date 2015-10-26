@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
-import stsc.common.algorithms.AlgorithmSettings;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
+import stsc.common.algorithms.MutatingAlgorithmSettings;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.storage.StockStorage;
 import stsc.general.trading.BrokerImpl;
@@ -24,7 +24,7 @@ public class ExecutionsStorageTest {
 
 	@Test
 	public void testExecutionsStorage() throws BadAlgorithmException {
-		final AlgorithmSettings smaSettings = TestAlgorithmsHelper.getSettings().addSubExecutionName("asd");
+		final MutatingAlgorithmSettings smaSettings = TestAlgorithmsHelper.getSettings().addSubExecutionName("asd");
 
 		final ExecutionsStorage eStorage = new ExecutionsStorage();
 
