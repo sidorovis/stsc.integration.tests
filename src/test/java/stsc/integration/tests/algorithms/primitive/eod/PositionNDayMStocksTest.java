@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.algorithms.primitive.eod.PositionNDayMStocks;
 import stsc.common.FromToPeriod;
@@ -15,6 +14,7 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.stocks.united.format.UnitedFormatStock;
+import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorImpl;
 import stsc.general.simulator.SimulatorSettingsImpl;

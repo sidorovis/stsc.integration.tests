@@ -2,9 +2,9 @@ package stsc.integration.tests.helper;
 
 import java.text.ParseException;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.algorithms.StockAlgorithmInit;
 import stsc.common.storage.SignalsStorage;
+import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.storage.SignalsStorageImpl;
 
 public class StockAlgoInitHelper {

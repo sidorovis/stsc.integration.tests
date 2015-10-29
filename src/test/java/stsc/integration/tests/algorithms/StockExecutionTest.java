@@ -5,10 +5,10 @@ import java.text.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.StockAlgorithm;
 import stsc.common.algorithms.StockExecution;
+import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 
 public final class StockExecutionTest {
