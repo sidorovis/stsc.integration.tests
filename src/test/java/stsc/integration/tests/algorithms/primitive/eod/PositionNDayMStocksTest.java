@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.Input;
 import stsc.algorithms.primitive.eod.PositionNDayMStocks;
 import stsc.common.FromToPeriod;
@@ -59,11 +59,11 @@ public class PositionNDayMStocksTest {
 		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa")));
 		final TradeProcessorInit init = new TradeProcessorInit(stockStorage, period);
 
-		final AlgorithmSettingsImpl in = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl in = new AlgorithmConfigurationImpl();
 		in.setString("e", "open");
 		init.getExecutionsStorage().addStockExecution(new StockExecution("in", Input.class, in));
 
-		final AlgorithmSettingsImpl positionNDayMStocks = new AlgorithmSettingsImpl();
+		final AlgorithmConfigurationImpl positionNDayMStocks = new AlgorithmConfigurationImpl();
 		positionNDayMStocks.setInteger("n", 22);
 		positionNDayMStocks.setInteger("m", 2);
 		positionNDayMStocks.setString("side", side);

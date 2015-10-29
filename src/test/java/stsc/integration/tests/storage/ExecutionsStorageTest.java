@@ -5,12 +5,12 @@ import java.text.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import stsc.algorithms.AlgorithmSettingsImpl;
+import stsc.algorithms.AlgorithmConfigurationImpl;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
-import stsc.common.algorithms.MutatingAlgorithmSettings;
+import stsc.common.algorithms.MutatingAlgorithmConfiguration;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.storage.StockStorage;
 import stsc.general.trading.BrokerImpl;
@@ -24,12 +24,12 @@ public class ExecutionsStorageTest {
 
 	@Test
 	public void testExecutionsStorage() throws BadAlgorithmException {
-		final MutatingAlgorithmSettings smaSettings = new AlgorithmSettingsImpl().addSubExecutionName("asd");
+		final MutatingAlgorithmConfiguration smaSettings = new AlgorithmConfigurationImpl().addSubExecutionName("asd");
 
 		final ExecutionsStorage eStorage = new ExecutionsStorage();
 
 		eStorage.addStockExecution(new StockExecution("t2", Sma.class, smaSettings));
-		eStorage.addEodExecution(new EodExecution("t1", TestingEodAlgorithm.class, new AlgorithmSettingsImpl()));
+		eStorage.addEodExecution(new EodExecution("t1", TestingEodAlgorithm.class, new AlgorithmConfigurationImpl()));
 		ExecutionStarter es = eStorage.initialize(new BrokerImpl(stockStorage), stockStorage.getStockNames());
 
 		Assert.assertEquals(1, es.getEodAlgorithmsSize());
@@ -51,7 +51,7 @@ public class ExecutionsStorageTest {
 	@Test
 	public void testExceptionOnInit() throws BadAlgorithmException, ParseException {
 		final ExecutionsStorage es = new ExecutionsStorage();
-		es.addStockExecution(new StockExecution("t2", Sma.class, new AlgorithmSettingsImpl()));
+		es.addStockExecution(new StockExecution("t2", Sma.class, new AlgorithmConfigurationImpl()));
 
 		boolean throwed = false;
 		try {
