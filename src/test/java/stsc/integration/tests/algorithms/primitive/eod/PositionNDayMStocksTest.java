@@ -17,7 +17,7 @@ import stsc.common.stocks.united.format.UnitedFormatStock;
 import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorImpl;
-import stsc.general.simulator.SimulatorSettingsImpl;
+import stsc.general.simulator.SimulatorConfigurationImpl;
 import stsc.general.statistic.MetricType;
 import stsc.general.statistic.Metrics;
 import stsc.general.trading.TradeProcessorInit;
@@ -71,7 +71,7 @@ public class PositionNDayMStocksTest {
 		init.getExecutionsStorage().addEodExecution(new EodExecution("positionNDayMStocks", PositionNDayMStocks.class, positionNDayMStocks));
 
 		final Simulator simulator = new SimulatorImpl();
-		simulator.simulateMarketTrading(new SimulatorSettingsImpl(0, init));
+		simulator.simulateMarketTrading(new SimulatorConfigurationImpl(0, init));
 		final Metrics s = simulator.getMetrics();
 		Assert.assertEquals(0.247656, s.getMetric(MetricType.freq), Settings.doubleEpsilon);
 	}

@@ -23,8 +23,8 @@ import stsc.common.storage.SignalsStorage;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorImpl;
-import stsc.general.simulator.SimulatorSettings;
-import stsc.general.simulator.SimulatorSettingsImpl;
+import stsc.general.simulator.SimulatorConfiguration;
+import stsc.general.simulator.SimulatorConfigurationImpl;
 import stsc.general.trading.BrokerImpl;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
@@ -150,7 +150,7 @@ public class AllToAllMovingPearsonCorrelationTest {
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
 				"EodExecutions = " + executionName + "\n" + //
 						executionName + ".loadLine = ." + AllToAllMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i)\n");
-		final SimulatorSettings simulatorSettings = new SimulatorSettingsImpl(0, tradeProcessorInit);
+		final SimulatorConfiguration simulatorSettings = new SimulatorConfigurationImpl(0, tradeProcessorInit);
 		final Simulator simulator = new SimulatorImpl();
 		simulator.simulateMarketTrading(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
