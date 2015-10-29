@@ -47,7 +47,7 @@ public class PositionNDayMStocksTest {
 		Metrics s = SimulatorImpl.fromFile(resourceToPath("simulator_tests/ndays.ini")).getMetrics();
 		Assert.assertNotNull(s);
 		Assert.assertEquals(550.0, s.getMetric(MetricType.period), Settings.doubleEpsilon);
-		Assert.assertEquals(-21.784509, s.getMetric(MetricType.avGain), Settings.doubleEpsilon);
+		Assert.assertEquals(-20.773388, s.getMetric(MetricType.avGain), Settings.doubleEpsilon);
 	}
 
 	private void testHelper(String side) throws Exception {
@@ -59,11 +59,11 @@ public class PositionNDayMStocksTest {
 		stockStorage.updateStock(UnitedFormatStock.readFromUniteFormatFile(TestAlgorithmsHelper.resourceToPath("apa")));
 		final TradeProcessorInit init = new TradeProcessorInit(stockStorage, period);
 
-		final AlgorithmSettingsImpl in = new AlgorithmSettingsImpl(period);
+		final AlgorithmSettingsImpl in = new AlgorithmSettingsImpl();
 		in.setString("e", "open");
 		init.getExecutionsStorage().addStockExecution(new StockExecution("in", Input.class, in));
 
-		final AlgorithmSettingsImpl positionNDayMStocks = new AlgorithmSettingsImpl(period);
+		final AlgorithmSettingsImpl positionNDayMStocks = new AlgorithmSettingsImpl();
 		positionNDayMStocks.setInteger("n", 22);
 		positionNDayMStocks.setInteger("m", 2);
 		positionNDayMStocks.setString("side", side);

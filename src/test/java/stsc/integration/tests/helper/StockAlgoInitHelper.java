@@ -17,7 +17,7 @@ public class StockAlgoInitHelper {
 
 	public StockAlgoInitHelper(String executionName, String stockName, SignalsStorage stockStorage) throws ParseException {
 		this.signalsStorage = stockStorage;
-		this.settings = new AlgorithmSettingsImpl(TestAlgorithmsHelper.getPeriod());
+		this.settings = new AlgorithmSettingsImpl();
 		this.init = new StockAlgorithmInit(executionName, stockStorage, stockName, settings);
 	}
 
