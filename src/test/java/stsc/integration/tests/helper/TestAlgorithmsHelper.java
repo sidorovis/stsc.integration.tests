@@ -3,7 +3,7 @@ package stsc.integration.tests.helper;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 
-import stsc.common.stocks.UnitedFormatHelper;
+import stsc.common.stocks.united.format.UnitedFormatHelper;
 
 public class TestAlgorithmsHelper {
 

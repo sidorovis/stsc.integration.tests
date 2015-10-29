@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 
-import stsc.common.stocks.UnitedFormatHelper;
-import stsc.common.stocks.UnitedFormatStock;
+import stsc.common.stocks.united.format.UnitedFormatHelper;
+import stsc.common.stocks.united.format.UnitedFormatStock;
 import stsc.common.storage.StockStorage;
 import stsc.storage.ThreadSafeStockStorage;
 

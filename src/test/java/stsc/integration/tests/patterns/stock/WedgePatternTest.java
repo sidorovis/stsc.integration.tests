@@ -13,7 +13,7 @@ import stsc.common.Day;
 import stsc.common.Settings;
 import stsc.common.signals.SignalContainer;
 import stsc.common.stocks.Stock;
-import stsc.common.stocks.UnitedFormatStock;
+import stsc.common.stocks.united.format.UnitedFormatStock;
 import stsc.common.storage.SignalsStorage;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 import stsc.integration.tests.helper.TestAlgorithmsHelper;
