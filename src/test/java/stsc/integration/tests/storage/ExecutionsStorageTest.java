@@ -9,7 +9,7 @@ import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.EodExecution;
-import stsc.common.algorithms.MutatingAlgorithmConfiguration;
+import stsc.common.algorithms.MutableAlgorithmConfiguration;
 import stsc.common.algorithms.StockExecution;
 import stsc.common.storage.StockStorage;
 import stsc.general.algorithm.AlgorithmConfigurationImpl;
@@ -24,7 +24,7 @@ public class ExecutionsStorageTest {
 
 	@Test
 	public void testExecutionsStorage() throws BadAlgorithmException {
-		final MutatingAlgorithmConfiguration smaSettings = new AlgorithmConfigurationImpl().addSubExecutionName("asd");
+		final MutableAlgorithmConfiguration smaSettings = new AlgorithmConfigurationImpl().addSubExecutionName("asd");
 
 		final ExecutionsStorage eStorage = new ExecutionsStorage();
 
