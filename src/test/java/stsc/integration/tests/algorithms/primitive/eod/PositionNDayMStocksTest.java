@@ -11,8 +11,8 @@ import stsc.algorithms.primitive.eod.PositionNDayMStocks;
 import stsc.common.FromToPeriod;
 import stsc.common.Settings;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.EodExecution;
-import stsc.common.algorithms.StockExecution;
+import stsc.common.algorithms.EodExecutionInstance;
+import stsc.common.algorithms.StockExecutionInstance;
 import stsc.common.stocks.united.format.UnitedFormatStock;
 import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.general.simulator.Simulator;
@@ -61,14 +61,14 @@ public class PositionNDayMStocksTest {
 
 		final AlgorithmConfigurationImpl in = new AlgorithmConfigurationImpl();
 		in.setString("e", "open");
-		init.getExecutionsStorage().addStockExecution(new StockExecution("in", Input.class, in));
+		init.getExecutionsStorage().addStockExecution(new StockExecutionInstance("in", Input.class, in));
 
 		final AlgorithmConfigurationImpl positionNDayMStocks = new AlgorithmConfigurationImpl();
 		positionNDayMStocks.setInteger("n", 22);
 		positionNDayMStocks.setInteger("m", 2);
 		positionNDayMStocks.setString("side", side);
 		positionNDayMStocks.addSubExecutionName("in");
-		init.getExecutionsStorage().addEodExecution(new EodExecution("positionNDayMStocks", PositionNDayMStocks.class, positionNDayMStocks));
+		init.getExecutionsStorage().addEodExecution(new EodExecutionInstance("positionNDayMStocks", PositionNDayMStocks.class, positionNDayMStocks));
 
 		final Simulator simulator = new SimulatorImpl();
 		simulator.simulateMarketTrading(new SimulatorConfigurationImpl(0, init));

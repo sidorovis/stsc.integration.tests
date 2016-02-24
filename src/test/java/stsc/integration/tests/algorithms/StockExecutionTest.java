@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.algorithms.StockAlgorithm;
-import stsc.common.algorithms.StockExecution;
+import stsc.common.algorithms.StockExecutionInstance;
 import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.integration.tests.helper.StockAlgoInitHelper;
 
@@ -17,7 +17,7 @@ public final class StockExecutionTest {
 	public void testStockAlgorithmExecutionConstructor() {
 		boolean exception = false;
 		try {
-			new StockExecution("execution1", "algorithm1", new AlgorithmConfigurationImpl());
+			new StockExecutionInstance("execution1", "algorithm1", new AlgorithmConfigurationImpl());
 		} catch (BadAlgorithmException e) {
 			exception = true;
 		}
@@ -26,7 +26,7 @@ public final class StockExecutionTest {
 
 	@Test
 	public void testExecution() throws BadAlgorithmException, ParseException {
-		final StockExecution e3 = new StockExecution("e1", TestingStockAlgorithm.class.getName(), new AlgorithmConfigurationImpl());
+		final StockExecutionInstance e3 = new StockExecutionInstance("e1", TestingStockAlgorithm.class.getName(), new AlgorithmConfigurationImpl());
 		Assert.assertEquals(TestingStockAlgorithm.class.getName(), e3.getAlgorithmName());
 		Assert.assertEquals("e1", e3.getExecutionName());
 

@@ -8,14 +8,14 @@ import org.junit.Test;
 import stsc.algorithms.indices.primitive.stock.Sma;
 import stsc.algorithms.primitive.eod.TestingEodAlgorithm;
 import stsc.common.algorithms.BadAlgorithmException;
-import stsc.common.algorithms.EodExecution;
+import stsc.common.algorithms.EodExecutionInstance;
 import stsc.common.algorithms.MutableAlgorithmConfiguration;
-import stsc.common.algorithms.StockExecution;
+import stsc.common.algorithms.StockExecutionInstance;
 import stsc.common.storage.StockStorage;
 import stsc.general.algorithm.AlgorithmConfigurationImpl;
 import stsc.general.trading.BrokerImpl;
-import stsc.storage.ExecutionStarter;
-import stsc.storage.ExecutionsStorage;
+import stsc.storage.ExecutionInstanceProcessor;
+import stsc.storage.ExecutionInstancesStorage;
 import stsc.storage.mocks.StockStorageMock;
 
 public class ExecutionsStorageTest {
@@ -26,11 +26,11 @@ public class ExecutionsStorageTest {
 	public void testExecutionsStorage() throws BadAlgorithmException {
 		final MutableAlgorithmConfiguration smaSettings = new AlgorithmConfigurationImpl().addSubExecutionName("asd");
 
-		final ExecutionsStorage eStorage = new ExecutionsStorage();
+		final ExecutionInstancesStorage eStorage = new ExecutionInstancesStorage();
 
-		eStorage.addStockExecution(new StockExecution("t2", Sma.class, smaSettings));
-		eStorage.addEodExecution(new EodExecution("t1", TestingEodAlgorithm.class, new AlgorithmConfigurationImpl()));
-		ExecutionStarter es = eStorage.initialize(new BrokerImpl(stockStorage), stockStorage.getStockNames());
+		eStorage.addStockExecution(new StockExecutionInstance("t2", Sma.class, smaSettings));
+		eStorage.addEodExecution(new EodExecutionInstance("t1", TestingEodAlgorithm.class, new AlgorithmConfigurationImpl()));
+		ExecutionInstanceProcessor es = eStorage.initialize(new BrokerImpl(stockStorage), stockStorage.getStockNames());
 
 		Assert.assertEquals(1, es.getEodAlgorithmsSize());
 
@@ -50,8 +50,8 @@ public class ExecutionsStorageTest {
 
 	@Test
 	public void testExceptionOnInit() throws BadAlgorithmException, ParseException {
-		final ExecutionsStorage es = new ExecutionsStorage();
-		es.addStockExecution(new StockExecution("t2", Sma.class, new AlgorithmConfigurationImpl()));
+		final ExecutionInstancesStorage es = new ExecutionInstancesStorage();
+		es.addStockExecution(new StockExecutionInstance("t2", Sma.class, new AlgorithmConfigurationImpl()));
 
 		boolean throwed = false;
 		try {
