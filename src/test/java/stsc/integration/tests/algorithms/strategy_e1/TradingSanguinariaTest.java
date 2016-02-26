@@ -13,8 +13,8 @@ import stsc.common.algorithms.BadAlgorithmException;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorImpl;
-import stsc.general.simulator.SimulatorConfiguration;
-import stsc.general.simulator.SimulatorConfigurationImpl;
+import stsc.general.simulator.Execution;
+import stsc.general.simulator.ExecutionImpl;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.IntegrationStockStorageMock;
 
@@ -29,7 +29,7 @@ public class TradingSanguinariaTest {
 				"test.loadLine = ." + TradingSanguinaria.class.getSimpleName() + "( " + //
 				LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(N=104i, LE=spy, ALLR=true)" + //
 				" )\n";
-		final SimulatorConfiguration simulatorSettings = new SimulatorConfigurationImpl(0, new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-2000", "01-01-2020"), executionsConfig));
+		final Execution simulatorSettings = new ExecutionImpl(0, new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-2000", "01-01-2020"), executionsConfig));
 		final Simulator simulator = new SimulatorImpl();
 		simulator.simulateMarketTrading(simulatorSettings);
 		Assert.assertNotNull(simulator.getMetrics());

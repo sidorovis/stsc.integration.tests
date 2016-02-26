@@ -23,8 +23,8 @@ import stsc.common.storage.SignalsStorage;
 import stsc.common.storage.StockStorage;
 import stsc.general.simulator.Simulator;
 import stsc.general.simulator.SimulatorImpl;
-import stsc.general.simulator.SimulatorConfiguration;
-import stsc.general.simulator.SimulatorConfigurationImpl;
+import stsc.general.simulator.Execution;
+import stsc.general.simulator.ExecutionImpl;
 import stsc.general.trading.BrokerImpl;
 import stsc.general.trading.TradeProcessorInit;
 import stsc.integration.tests.helper.EodAlgoInitHelper;
@@ -156,7 +156,7 @@ public class LeftToRightMovingPearsonCorrelationTest {
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
 				"EodExecutions = " + executionName + "\n" + //
 						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i, LE=spy, RE=aapl|adm|spy)\n");
-		final SimulatorConfiguration simulatorSettings = new SimulatorConfigurationImpl(0, tradeProcessorInit);
+		final Execution simulatorSettings = new ExecutionImpl(0, tradeProcessorInit);
 		final Simulator simulator = new SimulatorImpl();
 		simulator.simulateMarketTrading(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
@@ -175,7 +175,7 @@ public class LeftToRightMovingPearsonCorrelationTest {
 		final TradeProcessorInit tradeProcessorInit = new TradeProcessorInit(stockStorage, new FromToPeriod("01-01-1900", "01-01-2100"), //
 				"EodExecutions = " + executionName + "\n" + //
 						executionName + ".loadLine = ." + LeftToRightMovingPearsonCorrelation.class.getSimpleName() + "(size=10000i, LE=spy, ALLR = true)\n");
-		final SimulatorConfiguration simulatorSettings = new SimulatorConfigurationImpl(0, tradeProcessorInit);
+		final Execution simulatorSettings = new ExecutionImpl(0, tradeProcessorInit);
 		final Simulator simulator = new SimulatorImpl();
 		simulator.simulateMarketTrading(simulatorSettings);
 		final SignalsStorage signalsStorage = simulator.getSignalsStorage();
